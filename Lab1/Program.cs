@@ -38,6 +38,7 @@ namespace Lab1
 
     interface ISortView
     {
+        (bool, bool, bool, bool, bool, double) AddSort();
         event EventHandler<EventArgs> AddData;
         event EventHandler<EventArgs> Sort;
     }

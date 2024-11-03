@@ -35,13 +35,14 @@
             swamp = new System.Windows.Forms.CheckBox();
             sortGroup = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
+            iterationsSwamp = new System.Windows.Forms.TextBox();
             inputBox = new System.Windows.Forms.GroupBox();
             radioButton3 = new System.Windows.Forms.RadioButton();
             radioButton2 = new System.Windows.Forms.RadioButton();
             radioButton1 = new System.Windows.Forms.RadioButton();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             dataGridView1 = new System.Windows.Forms.DataGridView();
             Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             dataGridView2 = new System.Windows.Forms.DataGridView();
@@ -112,7 +113,7 @@
             // sortGroup
             // 
             sortGroup.Controls.Add(label1);
-            sortGroup.Controls.Add(textBox1);
+            sortGroup.Controls.Add(iterationsSwamp);
             sortGroup.Controls.Add(bubble);
             sortGroup.Controls.Add(swamp);
             sortGroup.Controls.Add(inserts);
@@ -135,12 +136,12 @@
             label1.TabIndex = 7;
             label1.Text = "Макс. итераций";
             // 
-            // textBox1
+            // iterationsSwamp
             // 
-            textBox1.Location = new System.Drawing.Point(116, 150);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(94, 23);
-            textBox1.TabIndex = 5;
+            iterationsSwamp.Location = new System.Drawing.Point(116, 150);
+            iterationsSwamp.Name = "iterationsSwamp";
+            iterationsSwamp.Size = new System.Drawing.Size(94, 23);
+            iterationsSwamp.TabIndex = 5;
             // 
             // inputBox
             // 
@@ -149,7 +150,7 @@
             inputBox.Controls.Add(radioButton1);
             inputBox.Location = new System.Drawing.Point(245, 30);
             inputBox.Name = "inputBox";
-            inputBox.Size = new System.Drawing.Size(105, 95);
+            inputBox.Size = new System.Drawing.Size(115, 95);
             inputBox.TabIndex = 6;
             inputBox.TabStop = false;
             inputBox.Text = "Тип ввода";
@@ -189,7 +190,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTextBox1 });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTextBox1, toolStripTextBox2 });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new System.Drawing.Size(800, 27);
@@ -201,7 +202,16 @@
             toolStripTextBox1.Name = "toolStripTextBox1";
             toolStripTextBox1.ReadOnly = true;
             toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
-            toolStripTextBox1.Text = "Сортировать";
+            toolStripTextBox1.Text = "Начать ввод";
+            toolStripTextBox1.Click += toolStripTextBox1_Click;
+            // 
+            // toolStripTextBox2
+            // 
+            toolStripTextBox2.Name = "toolStripTextBox2";
+            toolStripTextBox2.ReadOnly = true;
+            toolStripTextBox2.Size = new System.Drawing.Size(100, 23);
+            toolStripTextBox2.Text = "Сортировать";
+            toolStripTextBox2.Click += toolStripTextBox2_Click;
             // 
             // dataGridView1
             // 
@@ -248,7 +258,7 @@
             groupBox1.Controls.Add(radioButton5);
             groupBox1.Location = new System.Drawing.Point(245, 131);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(105, 78);
+            groupBox1.Size = new System.Drawing.Size(115, 78);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Сортировка по:";
@@ -316,7 +326,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox iterationsSwamp;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -328,5 +338,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
     }
 }
