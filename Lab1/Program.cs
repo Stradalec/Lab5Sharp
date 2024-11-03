@@ -36,6 +36,12 @@ namespace Lab1
         event EventHandler<EventArgs> StartDescent;
     }
 
+    interface ISortView
+    {
+        event EventHandler<EventArgs> AddData;
+        event EventHandler<EventArgs> Sort;
+    }
+
 
     // Модель. Основная часть работы программы происходит здесь
     class Model
@@ -496,6 +502,7 @@ namespace Lab1
     class Presenter
     {
         private IView mainView;
+        private ISortView sortView;
         private Model model;
 
         public Presenter(IView inputView)
@@ -507,7 +514,16 @@ namespace Lab1
             mainView.CreateGraph += new EventHandler<EventArgs>(CreateGraph);
             mainView.StartGoldenRatio += new EventHandler<EventArgs>(GoldenRatio);
             mainView.StartNewton += new EventHandler<EventArgs>(Newton);
-            mainView.StartDescent += new EventHandler<EventArgs>(Descent);
+            mainView.StartDescent += new EventHandler<EventArgs>(Descent);            
+        }
+
+        public Presenter(ISortView inputView)
+        {
+            sortView = inputView;
+            model = new Model();
+
+            //sortView.AddData += new EventHandler<EventArgs>(AddData);
+            //sortView.Sort += new EventHandler<EventArgs>(Sort);
         }
 
         private void Newton(object sender, EventArgs inputEvent)

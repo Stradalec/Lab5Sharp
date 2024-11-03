@@ -10,11 +10,15 @@ using System.Windows.Forms;
 
 namespace Lab1
 {
-    public partial class Sortings : Form
+    public partial class Sortings : Form, ISortView
     {
         public Sortings()
         {
             InitializeComponent();
+            Presenter presenter = new Presenter(this);
         }
+
+        public event EventHandler<EventArgs> AddData;
+        public event EventHandler<EventArgs> Sort;
     }
 }
