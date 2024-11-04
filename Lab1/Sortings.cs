@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -52,6 +53,21 @@ namespace Lab1
             }
 
         }
+
+        void ISortView.ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime)
+        {
+            dataGridView2.Rows.Clear();
+            int rowCount = Math.Max(methodName.Length, Math.Max(methodIterations.Length, methodTime.Length));
+            for (int index = 0; index < rowCount; ++index)
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                row.Cells.Add(new DataGridViewTextBoxCell { Value = methodName[index] });
+                row.Cells.Add(new DataGridViewTextBoxCell { Value = methodIterations[index] });
+                row.Cells.Add(new DataGridViewTextBoxCell { Value = methodTime[index] });
+                dataGridView2.Rows.Add(row);
+            }
+        }
+
         byte ISortView.StartInput()
         {
             byte inputMethod = 0;
@@ -84,7 +100,7 @@ namespace Lab1
 
         double[] ISortView.NumbersToSort()
         {
-            double[] numbers = [1];
+            double[] numbers = new double[dataGridView1.Rows.Count];
             for (int index = 0; index < dataGridView1.Rows.Count; ++index)
             {
                 double value = Convert.ToDouble(dataGridView1.Rows[index].Cells[0].Value);
@@ -92,42 +108,82 @@ namespace Lab1
             }
             return numbers;
         }
-        (bool, bool, bool, bool, bool, double) ISortView.AddSort()
-        {
-            bool isBubbleActive = false;
-            bool isInsertsActive = false;
-            bool isFastActive = false;
-            bool isShakeActive = false;
-            bool isSwampActive = false;
-            double swampIterations = 1000;
 
+        bool ISortView.IsActiveBubble()
+        {
             if (bubble.Checked)
             {
-                isBubbleActive = true;
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool ISortView.IsActiveInserts()
+        {
             if (inserts.Checked)
             {
-                isInsertsActive = true;
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool ISortView.IsActiveFast()
+        {
             if (fast.Checked)
             {
-                isFastActive = true;
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool ISortView.IsActiveShake()
+        {
             if (shake.Checked)
             {
-                isShakeActive = true;
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool ISortView.IsActiveSwamp()
+        {
             if (swamp.Checked)
             {
-                isSwampActive = true;
-                if (iterationsSwamp.Text.Length > 0)
-                {
-                    swampIterations = Convert.ToDouble(iterationsSwamp.Text);
-                }
+                return true;
             }
-
-            return (isBubbleActive, isInsertsActive, isFastActive, isShakeActive, isSwampActive, swampIterations);
+            else
+            {
+                return false;
+            }
         }
+
+
+        double ISortView.SwampsIterations()
+        {
+            if (iterationsSwamp.Text.Length > 0)
+            {
+                return Convert.ToDouble(iterationsSwamp.Text);
+            }
+            else
+            {
+
+                return 1000;
+            }
+        }
+
+        
 
         public event EventHandler<EventArgs> AddData;
         public event EventHandler<EventArgs> Sort;
@@ -140,7 +196,7 @@ namespace Lab1
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
         {
-
+            Sort(sender, inputEvent);
         }
 
         private void chooseFileButton_Click(object sender, EventArgs e)
@@ -158,10 +214,10 @@ namespace Lab1
         //    }
         //}
 
-        //private void ResetDataGridView(DataGridView dataGridView)
-        //{
-        //    dataGridView.CurrentCell = dataGridView.Rows[0].Cells[0];
-        //    dataGridView.BeginEdit(true);
-        //}
+        private void SetDataGridView(DataGridView dataGridView, int row, int cell)
+        {
+            dataGridView.CurrentCell = dataGridView.Rows[0].Cells[0];
+            dataGridView.BeginEdit(true);
+        }
     }
 }

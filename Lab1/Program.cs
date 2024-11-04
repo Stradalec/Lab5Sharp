@@ -15,6 +15,7 @@ using System.IO;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using MathNet.Numerics.LinearAlgebra.Solvers;
+using System.Diagnostics;
 
 namespace Lab1
 {
@@ -49,9 +50,18 @@ namespace Lab1
         int ArraySizeToRandom();
 
         string PathToFile();
-        (bool, bool, bool, bool, bool, double) AddSort();
+
+        bool IsActiveBubble();
+        bool IsActiveInserts();
+        bool IsActiveFast();
+        bool IsActiveShake();
+
+        bool IsActiveSwamp();
+
+        double SwampsIterations();        
 
         void ChooseInput(double[] inputArray);
+        void ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime);
         bool IsIncreasing();
 
         double[] NumbersToSort();
@@ -562,19 +572,39 @@ namespace Lab1
         }
 
         public (string[], int[], double[]) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort) {
-            string[] namesOfMethods = new string[1];
-            int[] iterationsOfMethods = new int[1];
-            double[] timeOfMethods = new double[1];
-
+            string[] namesOfMethods = new string[5];
+            int[] iterationsOfMethods = new int[5];
+            double[] timeOfMethods = new double[5];
+            if (isBubbleActive) 
+            {
+                var output = BubbleSort(arrayToSort, isIncreasingSort);
+                namesOfMethods[0] = output.Item1;
+                iterationsOfMethods[0] = output.Item2;
+                timeOfMethods[0] = output.Item3;
+            }
             return (namesOfMethods, iterationsOfMethods, timeOfMethods);
         }
 
         public (string, int, double) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             string namesOfBubble = "Сортировка пузырьком";
             int iterationsOfBubble = 0;
             double timeOfBubble = 0;
 
+            for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex) 
+            {
+                if (arrayToSort[sortIndex] > arrayToSort[sortIndex + 1])
+                {
+                    double temp = arrayToSort[sortIndex];
+                    arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
+                    arrayToSort[sortIndex + 1] = temp;
+                    ++iterationsOfBubble;
+                }
+            }
+            timer.Stop();
+            timeOfBubble = 1;
             return (namesOfBubble, iterationsOfBubble, timeOfBubble);
         }
     }
@@ -605,7 +635,7 @@ namespace Lab1
             model = new Model();
 
             sortView.AddData += new EventHandler<EventArgs>(AddData);
-            //sortView.Sort += new EventHandler<EventArgs>(Sort);
+            sortView.Sort += new EventHandler<EventArgs>(Sort);
         }
 
         private void AddData(object sender, EventArgs inputEvent)
@@ -616,7 +646,8 @@ namespace Lab1
 
         private void Sort(object sender, EventArgs inputEvent)
         {
-           
+            var output = model.Sorting(sortView.IsActiveBubble(), sortView.IsActiveInserts(), sortView.IsActiveFast(), sortView.IsActiveShake(), sortView.IsActiveSwamp(), sortView.SwampsIterations(), sortView.NumbersToSort(), sortView.IsIncreasing());
+            sortView.ShowSortResult(output.Item1, output.Item2, output.Item3);
         }
 
         private void Newton(object sender, EventArgs inputEvent)

@@ -37,6 +37,7 @@
             label1 = new System.Windows.Forms.Label();
             iterationsSwamp = new System.Windows.Forms.TextBox();
             inputBox = new System.Windows.Forms.GroupBox();
+            chooseFileButton = new System.Windows.Forms.Button();
             label2 = new System.Windows.Forms.Label();
             randomArray = new System.Windows.Forms.TextBox();
             file = new System.Windows.Forms.RadioButton();
@@ -48,14 +49,13 @@
             dataGridView1 = new System.Windows.Forms.DataGridView();
             Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             dataGridView2 = new System.Windows.Forms.DataGridView();
-            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Iterationss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             groupBox1 = new System.Windows.Forms.GroupBox();
             decreasing = new System.Windows.Forms.RadioButton();
             increasing = new System.Windows.Forms.RadioButton();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            chooseFileButton = new System.Windows.Forms.Button();
+            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -162,6 +162,16 @@
             inputBox.TabStop = false;
             inputBox.Text = "Тип ввода";
             // 
+            // chooseFileButton
+            // 
+            chooseFileButton.Location = new System.Drawing.Point(99, 92);
+            chooseFileButton.Name = "chooseFileButton";
+            chooseFileButton.Size = new System.Drawing.Size(89, 23);
+            chooseFileButton.TabIndex = 10;
+            chooseFileButton.Text = "Выбор пути";
+            chooseFileButton.UseVisualStyleBackColor = true;
+            chooseFileButton.Click += chooseFileButton_Click;
+            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -254,26 +264,11 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterationss, Time });
+            dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterations, Time });
             dataGridView2.Location = new System.Drawing.Point(466, 30);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.Size = new System.Drawing.Size(325, 150);
             dataGridView2.TabIndex = 9;
-            // 
-            // Method
-            // 
-            Method.HeaderText = "Метод";
-            Method.Name = "Method";
-            // 
-            // Iterationss
-            // 
-            Iterationss.HeaderText = "Итерации";
-            Iterationss.Name = "Iterationss";
-            // 
-            // Time
-            // 
-            Time.HeaderText = "Время";
-            Time.Name = "Time";
             // 
             // groupBox1
             // 
@@ -312,15 +307,20 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // chooseFileButton
+            // Method
             // 
-            chooseFileButton.Location = new System.Drawing.Point(99, 92);
-            chooseFileButton.Name = "chooseFileButton";
-            chooseFileButton.Size = new System.Drawing.Size(89, 23);
-            chooseFileButton.TabIndex = 10;
-            chooseFileButton.Text = "Выбор пути";
-            chooseFileButton.UseVisualStyleBackColor = true;
-            chooseFileButton.Click += chooseFileButton_Click;
+            Method.HeaderText = "Метод";
+            Method.Name = "Method";
+            // 
+            // Iterations
+            // 
+            Iterations.HeaderText = "Итерации";
+            Iterations.Name = "Iterations";
+            // 
+            // Time
+            // 
+            Time.HeaderText = "Время";
+            Time.Name = "Time";
             // 
             // Sortings
             // 
@@ -369,9 +369,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Iterationss;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton decreasing;
         private System.Windows.Forms.RadioButton increasing;
@@ -380,5 +377,8 @@
         private System.Windows.Forms.TextBox randomArray;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button chooseFileButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
     }
 }
