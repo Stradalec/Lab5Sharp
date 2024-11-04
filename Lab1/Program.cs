@@ -11,6 +11,9 @@ using System.Reflection;
 using Flee.PublicTypes;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 namespace Lab1
 {
@@ -528,19 +531,25 @@ namespace Lab1
                 case 3:
                     if (pathToFile != "temporary")
                     {
-                        Excel.Application excelApplication = new Excel.Application();
-                        Excel.Workbook workbook = excelApplication.Workbooks.Open(pathToFile);
-                        Excel.Worksheet worksheet = (Excel.Worksheet)workbook.Sheets[1];
-                        Excel.Range range = worksheet.UsedRange;
-                        int rowCount = range.Rows.Count;
-                        for (int excelIndex = 1; excelIndex <= rowCount; ++excelIndex)
+                        using(FileStream file =  new  FileStream(pathToFile, FileMode.Open, FileAccess.Read))
                         {
-                            numbers[excelIndex - 1] = Convert.ToDouble((range.Cells[excelIndex, 1] as Excel.Range).Value2.ToString());
+                            IWorkbook workbook = new XSSFWorkbook(file);
+                            ISheet sheet = workbook.GetSheetAt(0);
+                            
+                            for (int excelIndex = 0; excelIndex <= sheet.LastRowNum; ++excelIndex)
+                            {
+                                IRow  currentrow = sheet.GetRow(excelIndex);
+                                if (currentrow != null) 
+                                {
+                                    ICell cell = currentrow.GetCell(0);
+                                    if (cell != null)
+                                    {
+                                        numbers[excelIndex] = cell.NumericCellValue;
+                                    }
+                                }
+                                 
+                            }
                         }
-                        workbook.Close(false);
-                        Marshal.ReleaseComObject(workbook);
-                        excelApplication.Quit();
-                        Marshal.ReleaseComObject(excelApplication);
                     }
                     return numbers;
                     

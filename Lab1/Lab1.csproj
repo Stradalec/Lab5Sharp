@@ -44,6 +44,7 @@
     <PackageReference Include="Flee" />
     <PackageReference Include="Gmg.MicrosoftOfficeInteropExcel" />
     <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="NPOI" />
     <PackageReference Include="OxyPlot.Core" />
     <PackageReference Include="OxyPlot.WindowsForms" />
     <PackageReference Include="System.Configuration.ConfigurationManager" />

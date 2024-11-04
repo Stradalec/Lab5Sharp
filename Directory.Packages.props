@@ -13,6 +13,7 @@
     <PackageVersion Include="LightningChart" Version="12.1.1.1" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageVersion Include="MicrosoftOfficeCore" Version="15.0.0" />
+    <PackageVersion Include="NPOI" Version="2.7.1" />
     <PackageVersion Include="OxyPlot.Core" Version="2.2.0" />
     <PackageVersion Include="OxyPlot.WindowsForms" Version="2.1.2" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
