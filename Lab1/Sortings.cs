@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -81,6 +82,16 @@ namespace Lab1
             }
         }
 
+        double[] ISortView.NumbersToSort()
+        {
+            double[] numbers = [1];
+            for (int index = 0; index < dataGridView1.Rows.Count; ++index)
+            {
+                double value = Convert.ToDouble(dataGridView1.Rows[index].Cells[0].Value);
+                numbers[index] = value;
+            }
+            return numbers;
+        }
         (bool, bool, bool, bool, bool, double) ISortView.AddSort()
         {
             bool isBubbleActive = false;

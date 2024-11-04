@@ -14,6 +14,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using MathNet.Numerics.LinearAlgebra.Solvers;
 
 namespace Lab1
 {
@@ -52,6 +53,8 @@ namespace Lab1
 
         void ChooseInput(double[] inputArray);
         bool IsIncreasing();
+
+        double[] NumbersToSort();
         event EventHandler<EventArgs> AddData;
         event EventHandler<EventArgs> Sort;
     }
@@ -557,6 +560,23 @@ namespace Lab1
                     return numbers;
             }
         }
+
+        public (string[], int[], double[]) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort) {
+            string[] namesOfMethods = new string[1];
+            int[] iterationsOfMethods = new int[1];
+            double[] timeOfMethods = new double[1];
+
+            return (namesOfMethods, iterationsOfMethods, timeOfMethods);
+        }
+
+        public (string, int, double) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
+        {
+            string namesOfBubble = "Сортировка пузырьком";
+            int iterationsOfBubble = 0;
+            double timeOfBubble = 0;
+
+            return (namesOfBubble, iterationsOfBubble, timeOfBubble);
+        }
     }
 
     
@@ -592,6 +612,11 @@ namespace Lab1
         {
             var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.ArraySizeToRandom());
             sortView.ChooseInput(output);
+        }
+
+        private void Sort(object sender, EventArgs inputEvent)
+        {
+           
         }
 
         private void Newton(object sender, EventArgs inputEvent)
