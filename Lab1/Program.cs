@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.Reflection;
 using Flee.PublicTypes;
+using System.Runtime.InteropServices;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Lab1
 {
@@ -38,7 +40,15 @@ namespace Lab1
 
     interface ISortView
     {
+        byte StartInput();
+
+        int ArraySizeToRandom();
+
+        string PathToFile();
         (bool, bool, bool, bool, bool, double) AddSort();
+
+        void ChooseInput(double[] inputArray);
+        bool IsIncreasing();
         event EventHandler<EventArgs> AddData;
         event EventHandler<EventArgs> Sort;
     }
@@ -95,7 +105,7 @@ namespace Lab1
                 var expression = context.CompileGeneric<double>(function);
                 double y = expression.Evaluate();
                 lineSeries.Points.Add(new DataPoint(counterI, y));
-                
+
             }
 
             // Добавляем все точки в серию
@@ -215,7 +225,7 @@ namespace Lab1
             return (result, functionResult);
         }
 
-       
+
         public (double, double, List<double[]>) Newton(string inputFunction, double inputApproximation, double epsilon, double step, double iterationCount, byte inputChoice)
         {
             double result = 0;
@@ -237,7 +247,7 @@ namespace Lab1
             var expression = context.CompileGeneric<double>(inputFunction);
             for (int iteration = 0; iteration < iterationCount; ++iteration)
             {
-                switch(choice)
+                switch (choice)
                 {
                     case 1:
                         context.Variables["x"] = current;
@@ -298,7 +308,7 @@ namespace Lab1
                         ++innerCount;
                         current = next;
 
-                        
+
                         break;
                     case 3:
                         context.Variables["x"] = current;
@@ -333,21 +343,21 @@ namespace Lab1
                         ++innerCount;
                         current = next;
 
-                        
+
                         break;
                     default:
                         break;
                 }
-                if (innerCount >= iterationCount && (result == 0 && functionResult ==0))
+                if (innerCount >= iterationCount && (result == 0 && functionResult == 0))
                 {
                     return (double.NaN, double.NaN, array);
-                }                                          
+                }
             }
-            
+
             return (result, functionResult, array);
         }
 
-        public (double,double) Descent(string inputFunction, double inputApproximation, double epsilon, double step, double iterationCount, byte inputChoice, bool isWideAllowed) 
+        public (double, double) Descent(string inputFunction, double inputApproximation, double epsilon, double step, double iterationCount, byte inputChoice, bool isWideAllowed)
         {
             double result = double.NaN;
             double functionResult = double.NaN;
@@ -358,7 +368,7 @@ namespace Lab1
             double safety = 0;
 
             var context = new ExpressionContext();
-            context.Imports.AddType(typeof(Math)); 
+            context.Imports.AddType(typeof(Math));
             context.Variables["x"] = startX;
             var expression = context.CompileGeneric<double>(inputFunction);
             double lowWideStep = inputApproximation - wideStep;
@@ -407,9 +417,9 @@ namespace Lab1
                     ++safety;
                 } while (leftWideDerivative * rightWideDerivative > 0 && safety < iterationCount);
             }
-            
 
-            if (safety == iterationCount) 
+
+            if (safety == iterationCount)
             {
                 startX = inputApproximation;
             }
@@ -417,7 +427,7 @@ namespace Lab1
             for (int iterationIndex = 0; iterationIndex < iterationCount; ++iterationIndex)
             {
                 double currentX = startX;
-                
+
                 context.Variables["x"] = currentX;
                 expression = context.CompileGeneric<double>(inputFunction);
                 double valueOfFunction = expression.Evaluate();
@@ -459,11 +469,11 @@ namespace Lab1
                         break;
                 }
 
-                
+
                 startX = currentX;
                 double leftDerivative = NumericalDerivative(context, expression, currentX - step, step);
                 double rightDerivative = NumericalDerivative(context, expression, currentX + step, step);
-                if ((Math.Abs(valueOfLowerX - valueOfFunction) < epsilon || Math.Abs(valueOfUpperX - valueOfFunction) < epsilon)  && (leftDerivative * rightDerivative < 0))
+                if ((Math.Abs(valueOfLowerX - valueOfFunction) < epsilon || Math.Abs(valueOfUpperX - valueOfFunction) < epsilon) && (leftDerivative * rightDerivative < 0))
                 {
                     result = currentX;
                     context.Variables["x"] = result;
@@ -496,6 +506,48 @@ namespace Lab1
             double fxOriginal = expression.Evaluate();
             return (fxPlusH - 2 * fxOriginal + fxMinusH) / (h * h); //Центральная разность (метод нахождения 2 производной)
         }
+
+
+        public double[] ChooseInput(byte inputChoice, string pathToFile, int arraySize = 10)
+        {
+            double[] numbers = new double[arraySize];
+            switch (inputChoice)
+            {
+                case 1:
+                    numbers[0] = double.NaN;
+                    return numbers;
+                    
+                case 2:
+                    Random random = new Random();
+                    for(int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
+                    {
+                        numbers[randomIndex] = random.Next();
+                    }
+                    return numbers;
+                    
+                case 3:
+                    if (pathToFile != "temporary")
+                    {
+                        Excel.Application excelApplication = new Excel.Application();
+                        Excel.Workbook workbook = excelApplication.Workbooks.Open(pathToFile);
+                        Excel.Worksheet worksheet = (Excel.Worksheet)workbook.Sheets[1];
+                        Excel.Range range = worksheet.UsedRange;
+                        int rowCount = range.Rows.Count;
+                        for (int excelIndex = 1; excelIndex <= rowCount; ++excelIndex)
+                        {
+                            numbers[excelIndex - 1] = Convert.ToDouble((range.Cells[excelIndex, 1] as Excel.Range).Value2.ToString());
+                        }
+                        workbook.Close(false);
+                        Marshal.ReleaseComObject(workbook);
+                        excelApplication.Quit();
+                        Marshal.ReleaseComObject(excelApplication);
+                    }
+                    return numbers;
+                    
+                default:
+                    return numbers;
+            }
+        }
     }
 
     
@@ -523,8 +575,14 @@ namespace Lab1
             sortView = inputView;
             model = new Model();
 
-            //sortView.AddData += new EventHandler<EventArgs>(AddData);
+            sortView.AddData += new EventHandler<EventArgs>(AddData);
             //sortView.Sort += new EventHandler<EventArgs>(Sort);
+        }
+
+        private void AddData(object sender, EventArgs inputEvent)
+        {
+            var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.ArraySizeToRandom());
+            sortView.ChooseInput(output);
         }
 
         private void Newton(object sender, EventArgs inputEvent)

@@ -37,9 +37,11 @@
             label1 = new System.Windows.Forms.Label();
             iterationsSwamp = new System.Windows.Forms.TextBox();
             inputBox = new System.Windows.Forms.GroupBox();
-            radioButton3 = new System.Windows.Forms.RadioButton();
-            radioButton2 = new System.Windows.Forms.RadioButton();
-            radioButton1 = new System.Windows.Forms.RadioButton();
+            label2 = new System.Windows.Forms.Label();
+            randomArray = new System.Windows.Forms.TextBox();
+            file = new System.Windows.Forms.RadioButton();
+            generation = new System.Windows.Forms.RadioButton();
+            hand = new System.Windows.Forms.RadioButton();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
@@ -50,8 +52,10 @@
             Iterationss = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             groupBox1 = new System.Windows.Forms.GroupBox();
-            radioButton4 = new System.Windows.Forms.RadioButton();
-            radioButton5 = new System.Windows.Forms.RadioButton();
+            decreasing = new System.Windows.Forms.RadioButton();
+            increasing = new System.Windows.Forms.RadioButton();
+            openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            chooseFileButton = new System.Windows.Forms.Button();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -145,48 +149,67 @@
             // 
             // inputBox
             // 
-            inputBox.Controls.Add(radioButton3);
-            inputBox.Controls.Add(radioButton2);
-            inputBox.Controls.Add(radioButton1);
+            inputBox.Controls.Add(chooseFileButton);
+            inputBox.Controls.Add(label2);
+            inputBox.Controls.Add(randomArray);
+            inputBox.Controls.Add(file);
+            inputBox.Controls.Add(generation);
+            inputBox.Controls.Add(hand);
             inputBox.Location = new System.Drawing.Point(245, 30);
             inputBox.Name = "inputBox";
-            inputBox.Size = new System.Drawing.Size(115, 95);
+            inputBox.Size = new System.Drawing.Size(194, 124);
             inputBox.TabIndex = 6;
             inputBox.TabStop = false;
             inputBox.Text = "Тип ввода";
             // 
-            // radioButton3
+            // label2
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new System.Drawing.Point(6, 71);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new System.Drawing.Size(77, 19);
-            radioButton3.TabIndex = 2;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Из файла";
-            radioButton3.UseVisualStyleBackColor = true;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(112, 40);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(59, 15);
+            label2.TabIndex = 9;
+            label2.Text = "Сколько?";
             // 
-            // radioButton2
+            // randomArray
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new System.Drawing.Point(6, 46);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new System.Drawing.Size(83, 19);
-            radioButton2.TabIndex = 1;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Генерация";
-            radioButton2.UseVisualStyleBackColor = true;
+            randomArray.Location = new System.Drawing.Point(99, 58);
+            randomArray.Name = "randomArray";
+            randomArray.Size = new System.Drawing.Size(89, 23);
+            randomArray.TabIndex = 8;
             // 
-            // radioButton1
+            // file
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new System.Drawing.Point(6, 22);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new System.Drawing.Size(66, 19);
-            radioButton1.TabIndex = 0;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Ручной";
-            radioButton1.UseVisualStyleBackColor = true;
+            file.AutoSize = true;
+            file.Location = new System.Drawing.Point(6, 94);
+            file.Name = "file";
+            file.Size = new System.Drawing.Size(77, 19);
+            file.TabIndex = 2;
+            file.TabStop = true;
+            file.Text = "Из файла";
+            file.UseVisualStyleBackColor = true;
+            // 
+            // generation
+            // 
+            generation.AutoSize = true;
+            generation.Location = new System.Drawing.Point(6, 58);
+            generation.Name = "generation";
+            generation.Size = new System.Drawing.Size(83, 19);
+            generation.TabIndex = 1;
+            generation.TabStop = true;
+            generation.Text = "Генерация";
+            generation.UseVisualStyleBackColor = true;
+            // 
+            // hand
+            // 
+            hand.AutoSize = true;
+            hand.Location = new System.Drawing.Point(6, 22);
+            hand.Name = "hand";
+            hand.Size = new System.Drawing.Size(66, 19);
+            hand.TabIndex = 0;
+            hand.TabStop = true;
+            hand.Text = "Ручной";
+            hand.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -232,9 +255,9 @@
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterationss, Time });
-            dataGridView2.Location = new System.Drawing.Point(418, 30);
+            dataGridView2.Location = new System.Drawing.Point(466, 30);
             dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new System.Drawing.Size(343, 150);
+            dataGridView2.Size = new System.Drawing.Size(325, 150);
             dataGridView2.TabIndex = 9;
             // 
             // Method
@@ -254,36 +277,50 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton4);
-            groupBox1.Controls.Add(radioButton5);
-            groupBox1.Location = new System.Drawing.Point(245, 131);
+            groupBox1.Controls.Add(decreasing);
+            groupBox1.Controls.Add(increasing);
+            groupBox1.Location = new System.Drawing.Point(245, 160);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(115, 78);
+            groupBox1.Size = new System.Drawing.Size(194, 49);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Сортировка по:";
             // 
-            // radioButton4
+            // decreasing
             // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new System.Drawing.Point(7, 49);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new System.Drawing.Size(84, 19);
-            radioButton4.TabIndex = 2;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "Убыванию";
-            radioButton4.UseVisualStyleBackColor = true;
+            decreasing.AutoSize = true;
+            decreasing.Location = new System.Drawing.Point(104, 22);
+            decreasing.Name = "decreasing";
+            decreasing.Size = new System.Drawing.Size(84, 19);
+            decreasing.TabIndex = 2;
+            decreasing.TabStop = true;
+            decreasing.Text = "Убыванию";
+            decreasing.UseVisualStyleBackColor = true;
             // 
-            // radioButton5
+            // increasing
             // 
-            radioButton5.AutoSize = true;
-            radioButton5.Location = new System.Drawing.Point(7, 30);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new System.Drawing.Size(98, 19);
-            radioButton5.TabIndex = 1;
-            radioButton5.TabStop = true;
-            radioButton5.Text = "Возрастанию";
-            radioButton5.UseVisualStyleBackColor = true;
+            increasing.AutoSize = true;
+            increasing.Location = new System.Drawing.Point(6, 22);
+            increasing.Name = "increasing";
+            increasing.Size = new System.Drawing.Size(98, 19);
+            increasing.TabIndex = 1;
+            increasing.TabStop = true;
+            increasing.Text = "Возрастанию";
+            increasing.UseVisualStyleBackColor = true;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // chooseFileButton
+            // 
+            chooseFileButton.Location = new System.Drawing.Point(99, 92);
+            chooseFileButton.Name = "chooseFileButton";
+            chooseFileButton.Size = new System.Drawing.Size(89, 23);
+            chooseFileButton.TabIndex = 10;
+            chooseFileButton.Text = "Выбор пути";
+            chooseFileButton.UseVisualStyleBackColor = true;
+            chooseFileButton.Click += chooseFileButton_Click;
             // 
             // Sortings
             // 
@@ -322,9 +359,9 @@
         private System.Windows.Forms.CheckBox swamp;
         private System.Windows.Forms.GroupBox sortGroup;
         private System.Windows.Forms.GroupBox inputBox;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton file;
+        private System.Windows.Forms.RadioButton generation;
+        private System.Windows.Forms.RadioButton hand;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox iterationsSwamp;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -336,8 +373,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Iterationss;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton decreasing;
+        private System.Windows.Forms.RadioButton increasing;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox randomArray;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button chooseFileButton;
     }
 }

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flee" />
+    <PackageReference Include="Gmg.MicrosoftOfficeInteropExcel" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="OxyPlot.Core" />
     <PackageReference Include="OxyPlot.WindowsForms" />
