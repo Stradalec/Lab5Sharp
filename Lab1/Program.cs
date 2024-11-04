@@ -16,6 +16,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using MathNet.Numerics.LinearAlgebra.Solvers;
 using System.Diagnostics;
+using NPOI.SS.Formula.Functions;
 
 namespace Lab1
 {
@@ -58,7 +59,7 @@ namespace Lab1
 
         bool IsActiveSwamp();
 
-        double SwampsIterations();        
+        double SwampsIterations();
 
         void ChooseInput(double[] inputArray);
         void ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime);
@@ -532,27 +533,27 @@ namespace Lab1
                 case 1:
                     numbers[0] = double.NaN;
                     return numbers;
-                    
+
                 case 2:
                     Random random = new Random();
-                    for(int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
+                    for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
                         numbers[randomIndex] = random.Next();
                     }
                     return numbers;
-                    
+
                 case 3:
                     if (pathToFile != "temporary")
                     {
-                        using(FileStream file =  new  FileStream(pathToFile, FileMode.Open, FileAccess.Read))
+                        using (FileStream file = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
                         {
                             IWorkbook workbook = new XSSFWorkbook(file);
                             ISheet sheet = workbook.GetSheetAt(0);
-                            
+
                             for (int excelIndex = 0; excelIndex <= sheet.LastRowNum; ++excelIndex)
                             {
-                                IRow  currentrow = sheet.GetRow(excelIndex);
-                                if (currentrow != null) 
+                                IRow currentrow = sheet.GetRow(excelIndex);
+                                if (currentrow != null)
                                 {
                                     ICell cell = currentrow.GetCell(0);
                                     if (cell != null)
@@ -560,56 +561,146 @@ namespace Lab1
                                         numbers[excelIndex] = cell.NumericCellValue;
                                     }
                                 }
-                                 
+
                             }
                         }
                     }
                     return numbers;
-                    
+
                 default:
                     return numbers;
             }
         }
 
-        public (string[], int[], double[]) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort) {
+        public (string[], int[], double[]) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort)
+        {
             string[] namesOfMethods = new string[5];
             int[] iterationsOfMethods = new int[5];
             double[] timeOfMethods = new double[5];
-            if (isBubbleActive) 
+            if (isBubbleActive)
             {
                 var output = BubbleSort(arrayToSort, isIncreasingSort);
                 namesOfMethods[0] = output.Item1;
                 iterationsOfMethods[0] = output.Item2;
                 timeOfMethods[0] = output.Item3;
             }
+            if (isInsertsActive)
+            {
+                var output = InsertsSort(arrayToSort, isIncreasingSort);
+                namesOfMethods[1] = output.Item1;
+                iterationsOfMethods[1] = output.Item2;
+                timeOfMethods[1] = output.Item3;
+            }           
             return (namesOfMethods, iterationsOfMethods, timeOfMethods);
         }
 
-        public (string, int, double) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
+        private (string, int, double) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
             string namesOfBubble = "Сортировка пузырьком";
             int iterationsOfBubble = 0;
             double timeOfBubble = 0;
-
-            for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex) 
+            bool swapped;
+            if (isIncreasingSort)
             {
-                if (arrayToSort[sortIndex] > arrayToSort[sortIndex + 1])
+
+                do
                 {
-                    double temp = arrayToSort[sortIndex];
-                    arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
-                    arrayToSort[sortIndex + 1] = temp;
-                    ++iterationsOfBubble;
-                }
+                    swapped = false;
+                    for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
+                    {
+
+                        if (arrayToSort[sortIndex] > arrayToSort[sortIndex + 1])
+                        {
+                            double temp = arrayToSort[sortIndex];
+                            arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
+                            arrayToSort[sortIndex + 1] = temp;
+                            swapped = true;
+                        }
+                        ++iterationsOfBubble;
+                    }
+                } while (swapped && iterationsOfBubble < arrayToSort.Length);
+
             }
+            else
+            {
+                do
+                {
+                    swapped = false;
+                    for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
+                    {
+
+                        if (arrayToSort[sortIndex] < arrayToSort[sortIndex + 1])
+                        {
+                            double temp = arrayToSort[sortIndex];
+                            arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
+                            arrayToSort[sortIndex + 1] = temp;
+                            swapped = true;
+                        }
+                        ++iterationsOfBubble;
+                    }
+                } while (swapped && iterationsOfBubble < arrayToSort.Length);
+            }
+
             timer.Stop();
-            timeOfBubble = 1;
+            timeOfBubble = timer.Elapsed.TotalSeconds;
             return (namesOfBubble, iterationsOfBubble, timeOfBubble);
         }
+
+        private (string, int, double) InsertsSort(double[] arrayToSort, bool isIncreasingSort)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            string namesOfInserts = "Сортировка вставками";
+            int iterationsOfInserts = 0;
+            double timeOfInserts = 0;
+            if (isIncreasingSort)
+            {
+                for (int index = 1; index < arrayToSort.Length; ++index)
+                {
+                    double key = arrayToSort[index];
+                    int temp = index - 1;
+                    while (temp >= 0 && arrayToSort[temp] > key)
+                    {
+                        arrayToSort[temp + 1] = arrayToSort[temp];
+                        --temp;
+                    }
+
+                    arrayToSort[temp + 1] = key;
+                    ++iterationsOfInserts;
+                }
+
+            }
+            else
+            {
+                for (int index = 1; index < arrayToSort.Length; ++index)
+                {
+                    double key = arrayToSort[index];
+                    int temp = index - 1;
+                    while (temp >= 0 && arrayToSort[temp] < key)
+                    {
+                        arrayToSort[temp + 1] = arrayToSort[temp];
+                        --temp;
+                    }
+
+                    arrayToSort[temp + 1] = key;
+                    ++iterationsOfInserts;
+                }
+            }
+
+            timer.Stop();
+            timeOfInserts = timer.Elapsed.TotalSeconds;
+            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+        }
+
+        
+
+
+        
     }
 
-    
+
     // Презентер. Извлекает данные из модели, передает в вид. Обрабатывает события
     class Presenter
     {
@@ -626,7 +717,7 @@ namespace Lab1
             mainView.CreateGraph += new EventHandler<EventArgs>(CreateGraph);
             mainView.StartGoldenRatio += new EventHandler<EventArgs>(GoldenRatio);
             mainView.StartNewton += new EventHandler<EventArgs>(Newton);
-            mainView.StartDescent += new EventHandler<EventArgs>(Descent);            
+            mainView.StartDescent += new EventHandler<EventArgs>(Descent);
         }
 
         public Presenter(ISortView inputView)
