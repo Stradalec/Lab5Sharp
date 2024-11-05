@@ -538,7 +538,7 @@ namespace Lab1
                     Random random = new Random();
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
-                        numbers[randomIndex] = random.Next();
+                        numbers[randomIndex] = random.Next(1000);
                     }
                     return numbers;
 
@@ -549,6 +549,7 @@ namespace Lab1
                         {
                             IWorkbook workbook = new XSSFWorkbook(file);
                             ISheet sheet = workbook.GetSheetAt(0);
+                            numbers = new double[sheet.LastRowNum + 1];
 
                             for (int excelIndex = 0; excelIndex <= sheet.LastRowNum; ++excelIndex)
                             {
@@ -590,7 +591,14 @@ namespace Lab1
                 namesOfMethods[1] = output.Item1;
                 iterationsOfMethods[1] = output.Item2;
                 timeOfMethods[1] = output.Item3;
-            }           
+            }
+            if (isShakeActive)
+            {
+                var output = ShakeSort(arrayToSort, isIncreasingSort);
+                namesOfMethods[3] = output.Item1;
+                iterationsOfMethods[3] = output.Item2;
+                timeOfMethods[3] = output.Item3;
+            }
             return (namesOfMethods, iterationsOfMethods, timeOfMethods);
         }
 
@@ -618,9 +626,10 @@ namespace Lab1
                             arrayToSort[sortIndex + 1] = temp;
                             swapped = true;
                         }
-                        ++iterationsOfBubble;
+                        
                     }
-                } while (swapped && iterationsOfBubble < arrayToSort.Length);
+                    ++iterationsOfBubble;
+                } while ( iterationsOfBubble < arrayToSort.Length - 1);
 
             }
             else
@@ -640,7 +649,7 @@ namespace Lab1
                         }
                         ++iterationsOfBubble;
                     }
-                } while (swapped && iterationsOfBubble < arrayToSort.Length);
+                } while (iterationsOfBubble < arrayToSort.Length - 1);
             }
 
             timer.Stop();
@@ -695,9 +704,120 @@ namespace Lab1
         }
 
         
+        private (string, int, double) FastSort(double[] arrayToSort, bool isIncreasingSort)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            string namesOfInserts = "Сортировка вставками";
+            int iterationsOfInserts = 0;
+            double timeOfInserts = 0;
+            if (isIncreasingSort)
+            {
+                
+            }
+            else
+            {
+                
+            }
 
+            timer.Stop();
+            timeOfInserts = timer.Elapsed.TotalSeconds;
+            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+        }
 
-        
+        private (string, int, double) ShakeSort(double[] arrayToSort, bool isIncreasingSort)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            string namesOfShake = "Шейкерная сортировка";
+            int iterationsOfShake = 0;
+            double timeOfShake = 0;
+            if (isIncreasingSort)
+            {
+                do
+                {
+                    
+                    for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
+                    {
+
+                        if (arrayToSort[sortIndex] > arrayToSort[sortIndex + 1])
+                        {
+                            double temp = arrayToSort[sortIndex];
+                            arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
+                            arrayToSort[sortIndex + 1] = temp;
+                            
+                        }
+
+                    }
+
+                    for (int ReverseSortIndex = arrayToSort.Length - 1; ReverseSortIndex > 0; --ReverseSortIndex)
+                    {
+
+                        if (arrayToSort[ReverseSortIndex - 1] > arrayToSort[ReverseSortIndex])
+                        {
+                            double temp = arrayToSort[ReverseSortIndex - 1];
+                            arrayToSort[ReverseSortIndex - 1] = arrayToSort[ReverseSortIndex];
+                            arrayToSort[ReverseSortIndex] = temp;
+
+                        }
+
+                    }
+                    ++iterationsOfShake;
+                } while (iterationsOfShake < arrayToSort.Length - 1);
+            }
+            else
+            {
+                do
+                {
+
+                    for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
+                    {
+
+                        if (arrayToSort[sortIndex] < arrayToSort[sortIndex + 1])
+                        {
+                            double temp = arrayToSort[sortIndex];
+                            arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
+                            arrayToSort[sortIndex + 1] = temp;
+
+                        }
+
+                    }
+
+                    for (int ReverseSortIndex = arrayToSort.Length - 1; ReverseSortIndex > 0; --ReverseSortIndex)
+                    {
+
+                        if (arrayToSort[ReverseSortIndex - 1] < arrayToSort[ReverseSortIndex])
+                        {
+                            double temp = arrayToSort[ReverseSortIndex - 1];
+                            arrayToSort[ReverseSortIndex - 1] = arrayToSort[ReverseSortIndex];
+                            arrayToSort[ReverseSortIndex] = temp;
+
+                        }
+
+                    }
+                    ++iterationsOfShake;
+                } while (iterationsOfShake < arrayToSort.Length - 1);
+            }
+
+            timer.Stop();
+            timeOfShake = timer.Elapsed.TotalSeconds;
+            return (namesOfShake, iterationsOfShake, timeOfShake);
+        }
+
+        private (string, int, double) SwampSort(double[] arrayToSort, bool isIncreasingSort, int swampIterations)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            string namesOfInserts = "Сортировка вставками";
+            int iterationsOfInserts = 0;
+            double timeOfInserts = 0;
+            
+
+            timer.Stop();
+            timeOfInserts = timer.Elapsed.TotalSeconds;
+            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+        }
+
     }
 
 

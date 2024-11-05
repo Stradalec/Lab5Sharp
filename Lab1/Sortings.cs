@@ -100,8 +100,8 @@ namespace Lab1
 
         double[] ISortView.NumbersToSort()
         {
-            double[] numbers = new double[dataGridView1.Rows.Count];
-            for (int index = 0; index < dataGridView1.Rows.Count; ++index)
+            double[] numbers = new double[dataGridView1.Rows.Count - 1];
+            for (int index = 0; index < dataGridView1.Rows.Count - 1; ++index)
             {
                 double value = Convert.ToDouble(dataGridView1.Rows[index].Cells[0].Value);
                 numbers[index] = value;
