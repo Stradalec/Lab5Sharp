@@ -17,6 +17,7 @@ using NPOI.XSSF.UserModel;
 using MathNet.Numerics.LinearAlgebra.Solvers;
 using System.Diagnostics;
 using NPOI.SS.Formula.Functions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab1
 {
@@ -599,6 +600,13 @@ namespace Lab1
                 iterationsOfMethods[3] = output.Item2;
                 timeOfMethods[3] = output.Item3;
             }
+            if (isSwampActive)
+            {
+                var output = SwampSort(arrayToSort, isIncreasingSort, Convert.ToInt32(swampIterations));
+                namesOfMethods[4] = output.Item1;
+                iterationsOfMethods[4] = output.Item2;
+                timeOfMethods[4] = output.Item3;
+            }
             return (namesOfMethods, iterationsOfMethods, timeOfMethods);
         }
 
@@ -808,16 +816,59 @@ namespace Lab1
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
-            string namesOfInserts = "Сортировка вставками";
-            int iterationsOfInserts = 0;
-            double timeOfInserts = 0;
-            
+            string namesOfSwamp = "Болотная сортировка";
+            int iterationsOfSwamp = 0;
+            double timeOfSwamp = 0;
+            while (!isSorted(arrayToSort, isIncreasingSort) && iterationsOfSwamp <= swampIterations)
+            {
+
+                Random generator = new Random();
+
+                for (int index = 0; index < arrayToSort.Length; ++index)
+                {
+
+                    int randomPosition = generator.Next(arrayToSort.Length);
+                    double tempVariable = arrayToSort[index];
+                    arrayToSort[index] = arrayToSort[randomPosition];
+                    arrayToSort[randomPosition] = tempVariable;
+                    ++iterationsOfSwamp;
+                }
+                
+            };
 
             timer.Stop();
-            timeOfInserts = timer.Elapsed.TotalSeconds;
-            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+            timeOfSwamp = timer.Elapsed.TotalSeconds;
+            return (namesOfSwamp, iterationsOfSwamp, timeOfSwamp);
         }
 
+        private bool isSorted(double[] data, bool isIncreasing)
+        {
+            if(isIncreasing)
+            {
+                for (int index = 1; index < data.Length; ++index)
+                {
+                    if (data[index] < data[index - 1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int index = 1; index < data.Length; ++index)
+                {
+                    if (data[index] > data[index - 1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+
+
+
+
+        }
     }
 
 

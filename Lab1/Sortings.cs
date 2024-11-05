@@ -178,7 +178,6 @@ namespace Lab1
             }
             else
             {
-
                 return 1000;
             }
         }
