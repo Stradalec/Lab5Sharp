@@ -18,6 +18,8 @@ using MathNet.Numerics.LinearAlgebra.Solvers;
 using System.Diagnostics;
 using NPOI.SS.Formula.Functions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net.Sockets;
+using NPOI.HPSF;
 
 namespace Lab1
 {
@@ -579,30 +581,35 @@ namespace Lab1
             string[] namesOfMethods = new string[5];
             int[] iterationsOfMethods = new int[5];
             double[] timeOfMethods = new double[5];
+            double[] array = new double[arrayToSort.Length];
+            MakeNewMassive(arrayToSort, array);
             if (isBubbleActive)
             {
-                var output = BubbleSort(arrayToSort, isIncreasingSort);
+                var output = BubbleSort(array, isIncreasingSort);
                 namesOfMethods[0] = output.Item1;
                 iterationsOfMethods[0] = output.Item2;
                 timeOfMethods[0] = output.Item3;
             }
+            MakeNewMassive(arrayToSort, array);
             if (isInsertsActive)
             {
-                var output = InsertsSort(arrayToSort, isIncreasingSort);
+                var output = InsertsSort(array, isIncreasingSort);
                 namesOfMethods[1] = output.Item1;
                 iterationsOfMethods[1] = output.Item2;
                 timeOfMethods[1] = output.Item3;
             }
+            MakeNewMassive(arrayToSort, array);
             if (isShakeActive)
             {
-                var output = ShakeSort(arrayToSort, isIncreasingSort);
+                var output = ShakeSort(array, isIncreasingSort);
                 namesOfMethods[3] = output.Item1;
                 iterationsOfMethods[3] = output.Item2;
                 timeOfMethods[3] = output.Item3;
             }
+            MakeNewMassive(arrayToSort, array);
             if (isSwampActive)
             {
-                var output = SwampSort(arrayToSort, isIncreasingSort, Convert.ToInt32(swampIterations));
+                var output = SwampSort(array, isIncreasingSort, Convert.ToInt32(swampIterations));
                 namesOfMethods[4] = output.Item1;
                 iterationsOfMethods[4] = output.Item2;
                 timeOfMethods[4] = output.Item3;
@@ -637,7 +644,7 @@ namespace Lab1
                         
                     }
                     ++iterationsOfBubble;
-                } while ( iterationsOfBubble < arrayToSort.Length - 1);
+                } while ( !isSorted(arrayToSort, isIncreasingSort));
 
             }
             else
@@ -657,7 +664,7 @@ namespace Lab1
                         }
                         ++iterationsOfBubble;
                     }
-                } while (iterationsOfBubble < arrayToSort.Length - 1);
+                } while (!isSorted(arrayToSort, isIncreasingSort));
             }
 
             timer.Stop();
@@ -771,7 +778,7 @@ namespace Lab1
 
                     }
                     ++iterationsOfShake;
-                } while (iterationsOfShake < arrayToSort.Length - 1);
+                } while (!isSorted(arrayToSort, isIncreasingSort));
             }
             else
             {
@@ -804,7 +811,7 @@ namespace Lab1
 
                     }
                     ++iterationsOfShake;
-                } while (iterationsOfShake < arrayToSort.Length - 1);
+                } while (!isSorted(arrayToSort, isIncreasingSort));
             }
 
             timer.Stop();
@@ -819,7 +826,7 @@ namespace Lab1
             string namesOfSwamp = "Болотная сортировка";
             int iterationsOfSwamp = 0;
             double timeOfSwamp = 0;
-            while (!isSorted(arrayToSort, isIncreasingSort) && iterationsOfSwamp <= swampIterations)
+            while (!isSorted(arrayToSort, isIncreasingSort) && iterationsOfSwamp <=swampIterations)
             {
 
                 Random generator = new Random();
@@ -843,13 +850,14 @@ namespace Lab1
 
         private bool isSorted(double[] data, bool isIncreasing)
         {
+            bool sorted = true;
             if(isIncreasing)
             {
                 for (int index = 1; index < data.Length; ++index)
                 {
                     if (data[index] < data[index - 1])
                     {
-                        return false;
+                        sorted = false;
                     }
                 }
             }
@@ -859,15 +867,21 @@ namespace Lab1
                 {
                     if (data[index] > data[index - 1])
                     {
-                        return false;
+                        sorted =  false;
                     }
                 }
             }
-            return true;
+            return sorted;
 
+        }
 
-
-
+        private double[] MakeNewMassive(double[] data, double[] output) 
+        {
+            for (int index = 0; index < data.Length; ++index)
+            {
+                output[index] = data[index];
+            }
+            return output;
         }
     }
 
