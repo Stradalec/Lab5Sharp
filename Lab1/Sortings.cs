@@ -205,13 +205,6 @@ namespace Lab1
             }
         }
 
-        //private void ClearColumn(DataGridView dataGridView, int columnIndex) 
-        //{
-        //    foreach(DataGridViewRow row in dataGridView.Rows)
-        //    {
-        //        row.Cells[columnIndex].Value = null;
-        //    }
-        //}
 
         private void SetDataGridView(DataGridView dataGridView, int row, int cell)
         {

@@ -20,6 +20,8 @@ using NPOI.SS.Formula.Functions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Net.Sockets;
 using NPOI.HPSF;
+using System.Windows.Navigation;
+using System.Windows.Media.Media3D;
 
 namespace Lab1
 {
@@ -77,6 +79,7 @@ namespace Lab1
     // Модель. Основная часть работы программы происходит здесь
     class Model
     {
+        private int fastIterations;
         public PlotModel CreateGraph(double interval, double downLimitation, double upLimitation, string function)
         {
             double limit = Convert.ToDouble(interval);
@@ -599,6 +602,13 @@ namespace Lab1
                 timeOfMethods[1] = output.Item3;
             }
             MakeNewMassive(arrayToSort, array);
+            if (isFastActive)
+            {
+                namesOfMethods[2] = "Быстрая сортировка";
+                iterationsOfMethods[2] = FastSort(arrayToSort, isIncreasingSort);;
+                timeOfMethods[2] = 1;
+            }
+            MakeNewMassive(arrayToSort, array);
             if (isShakeActive)
             {
                 var output = ShakeSort(array, isIncreasingSort);
@@ -624,13 +634,11 @@ namespace Lab1
             string namesOfBubble = "Сортировка пузырьком";
             int iterationsOfBubble = 0;
             double timeOfBubble = 0;
-            bool swapped;
             if (isIncreasingSort)
             {
 
                 do
                 {
-                    swapped = false;
                     for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
                     {
 
@@ -639,19 +647,17 @@ namespace Lab1
                             double temp = arrayToSort[sortIndex];
                             arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
                             arrayToSort[sortIndex + 1] = temp;
-                            swapped = true;
                         }
-                        
+
                     }
                     ++iterationsOfBubble;
-                } while ( !isSorted(arrayToSort, isIncreasingSort));
+                } while (!isSorted(arrayToSort, isIncreasingSort));
 
             }
             else
             {
                 do
                 {
-                    swapped = false;
                     for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
                     {
 
@@ -660,10 +666,10 @@ namespace Lab1
                             double temp = arrayToSort[sortIndex];
                             arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
                             arrayToSort[sortIndex + 1] = temp;
-                            swapped = true;
                         }
-                        ++iterationsOfBubble;
+
                     }
+                    ++iterationsOfBubble;
                 } while (!isSorted(arrayToSort, isIncreasingSort));
             }
 
@@ -719,25 +725,50 @@ namespace Lab1
         }
 
         
-        private (string, int, double) FastSort(double[] arrayToSort, bool isIncreasingSort)
+        private int FastSort(double[] arrayToSort, bool isIncreasingSort)
         {
-            Stopwatch timer = new Stopwatch();
-            timer.Start();
-            string namesOfInserts = "Сортировка вставками";
-            int iterationsOfInserts = 0;
-            double timeOfInserts = 0;
-            if (isIncreasingSort)
+            double[] copied = new double[arrayToSort.Length];
+            MakeNewMassive(arrayToSort, copied);
+            fastIterations = 0;
+            Sort(copied, isIncreasingSort, 1, copied.Length - 1);
+            return fastIterations;
+        }
+         
+        private void Sort(double[] array,  bool isIncreasingSort, int lowIndex, int upIndex)
+        {
+            if (lowIndex < upIndex)
             {
-                
-            }
-            else
-            {
-                
-            }
+                int pivotIndex = Partition(array, isIncreasingSort, lowIndex, upIndex);
 
-            timer.Stop();
-            timeOfInserts = timer.Elapsed.TotalSeconds;
-            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+                Sort(array, isIncreasingSort, lowIndex, pivotIndex - 1);
+                Sort(array, isIncreasingSort, pivotIndex + 1, upIndex);
+            }
+            ++fastIterations;
+        }
+        private static int Partition(double[] array, bool isIncreasingSort, int left, int right )
+        {
+            double pivot = array[right];
+            int i = left - 1;
+
+            for (int j = left; j < right; ++j)
+            {
+                if (isIncreasingSort ? array[j] <= pivot : array[j] >= pivot)
+                {
+                    ++i;
+                    double numberOne = array[i];
+                    double numberTwo = array[j];
+
+                    array[i] = numberTwo;
+                    array[j] = numberOne;                  
+                }
+            }
+            double tempOne = array[i + 1];
+            double tempTwo = array[right];
+
+            array[i + 1] = tempTwo;
+            array[right] = tempOne;
+
+            return i + 1;
         }
 
         private (string, int, double) ShakeSort(double[] arrayToSort, bool isIncreasingSort)
@@ -751,7 +782,7 @@ namespace Lab1
             {
                 do
                 {
-                    
+
                     for (int sortIndex = 0; sortIndex < arrayToSort.Length - 1; ++sortIndex)
                     {
 
@@ -760,7 +791,7 @@ namespace Lab1
                             double temp = arrayToSort[sortIndex];
                             arrayToSort[sortIndex] = arrayToSort[sortIndex + 1];
                             arrayToSort[sortIndex + 1] = temp;
-                            
+
                         }
 
                     }
@@ -826,7 +857,7 @@ namespace Lab1
             string namesOfSwamp = "Болотная сортировка";
             int iterationsOfSwamp = 0;
             double timeOfSwamp = 0;
-            while (!isSorted(arrayToSort, isIncreasingSort) && iterationsOfSwamp <=swampIterations)
+            while (!isSorted(arrayToSort, isIncreasingSort) && iterationsOfSwamp < swampIterations)
             {
 
                 Random generator = new Random();
@@ -838,9 +869,9 @@ namespace Lab1
                     double tempVariable = arrayToSort[index];
                     arrayToSort[index] = arrayToSort[randomPosition];
                     arrayToSort[randomPosition] = tempVariable;
-                    ++iterationsOfSwamp;
+
                 }
-                
+                ++iterationsOfSwamp;
             };
 
             timer.Stop();
@@ -851,7 +882,7 @@ namespace Lab1
         private bool isSorted(double[] data, bool isIncreasing)
         {
             bool sorted = true;
-            if(isIncreasing)
+            if (isIncreasing)
             {
                 for (int index = 1; index < data.Length; ++index)
                 {
@@ -867,7 +898,7 @@ namespace Lab1
                 {
                     if (data[index] > data[index - 1])
                     {
-                        sorted =  false;
+                        sorted = false;
                     }
                 }
             }
@@ -875,7 +906,7 @@ namespace Lab1
 
         }
 
-        private double[] MakeNewMassive(double[] data, double[] output) 
+        private double[] MakeNewMassive(double[] data, double[] output)
         {
             for (int index = 0; index < data.Length; ++index)
             {
@@ -883,7 +914,26 @@ namespace Lab1
             }
             return output;
         }
+
+        private int FindStartPoint(double[] arrayToSort, bool isIncreasingSort, int lowIndex, int upIndex)
+        {
+            double pivot = arrayToSort[upIndex];
+            int temp = (lowIndex - 1);
+            for (int pivotIndex = 0; pivotIndex < upIndex; ++pivotIndex)
+            {
+                if (arrayToSort[pivotIndex] < pivot)
+                {
+                    ++temp;
+                }
+
+                double otherTemp = arrayToSort[temp];
+                arrayToSort[temp + 1] = arrayToSort[upIndex];
+                arrayToSort[upIndex] = otherTemp;
+            }
+            return temp + 1;
+        }
     }
+
 
 
     // Презентер. Извлекает данные из модели, передает в вид. Обрабатывает события
