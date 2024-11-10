@@ -754,27 +754,27 @@ namespace Lab1
         private static int Partition(double[] array, bool isIncreasingSort, int left, int right )
         {
             double pivot = array[right];
-            int i = left - 1;
+            int index = left - 1;
 
-            for (int j = left; j < right; ++j)
+            for (int sortIndex = left; sortIndex < right; ++sortIndex)
             {
-                if (isIncreasingSort ? array[j] <= pivot : array[j] >= pivot)
+                if (isIncreasingSort ? array[sortIndex] <= pivot : array[sortIndex] >= pivot)
                 {
-                    ++i;
-                    double numberOne = array[i];
-                    double numberTwo = array[j];
+                    ++index;
+                    double numberOne = array[index];
+                    double numberTwo = array[sortIndex];
 
-                    array[i] = numberTwo;
-                    array[j] = numberOne;                  
+                    array[index] = numberTwo;
+                    array[sortIndex] = numberOne;                  
                 }
             }
-            double tempOne = array[i + 1];
+            double tempOne = array[index + 1];
             double tempTwo = array[right];
 
-            array[i + 1] = tempTwo;
+            array[index + 1] = tempTwo;
             array[right] = tempOne;
 
-            return i + 1;
+            return index + 1;
         }
 
         private (string, int, double) ShakeSort(double[] arrayToSort, bool isIncreasingSort)
