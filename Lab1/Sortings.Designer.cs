@@ -46,16 +46,18 @@
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            testingButton = new System.Windows.Forms.ToolStripTextBox();
             dataGridView1 = new System.Windows.Forms.DataGridView();
             Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             dataGridView2 = new System.Windows.Forms.DataGridView();
+            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             groupBox1 = new System.Windows.Forms.GroupBox();
             decreasing = new System.Windows.Forms.RadioButton();
             increasing = new System.Windows.Forms.RadioButton();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            progressBar1 = new System.Windows.Forms.ProgressBar();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -223,7 +225,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTextBox1, toolStripTextBox2 });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTextBox1, toolStripTextBox2, testingButton });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new System.Drawing.Size(800, 27);
@@ -245,6 +247,13 @@
             toolStripTextBox2.Size = new System.Drawing.Size(100, 23);
             toolStripTextBox2.Text = "Сортировать";
             toolStripTextBox2.Click += toolStripTextBox2_Click;
+            // 
+            // testingButton
+            // 
+            testingButton.Name = "testingButton";
+            testingButton.Size = new System.Drawing.Size(100, 23);
+            testingButton.Text = "Тестирование";
+            testingButton.Click += testingButton_Click;
             // 
             // dataGridView1
             // 
@@ -269,6 +278,21 @@
             dataGridView2.Name = "dataGridView2";
             dataGridView2.Size = new System.Drawing.Size(325, 150);
             dataGridView2.TabIndex = 9;
+            // 
+            // Method
+            // 
+            Method.HeaderText = "Метод";
+            Method.Name = "Method";
+            // 
+            // Iterations
+            // 
+            Iterations.HeaderText = "Итерации";
+            Iterations.Name = "Iterations";
+            // 
+            // Time
+            // 
+            Time.HeaderText = "Время";
+            Time.Name = "Time";
             // 
             // groupBox1
             // 
@@ -307,26 +331,19 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // Method
+            // progressBar1
             // 
-            Method.HeaderText = "Метод";
-            Method.Name = "Method";
-            // 
-            // Iterations
-            // 
-            Iterations.HeaderText = "Итерации";
-            Iterations.Name = "Iterations";
-            // 
-            // Time
-            // 
-            Time.HeaderText = "Время";
-            Time.Name = "Time";
+            progressBar1.Location = new System.Drawing.Point(181, 246);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new System.Drawing.Size(100, 23);
+            progressBar1.TabIndex = 11;
             // 
             // Sortings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(progressBar1);
             Controls.Add(groupBox1);
             Controls.Add(dataGridView2);
             Controls.Add(dataGridView1);
@@ -380,5 +397,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Method;
         private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.ToolStripTextBox testingButton;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

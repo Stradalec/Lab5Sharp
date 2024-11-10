@@ -544,7 +544,7 @@ namespace Lab1
                     Random random = new Random();
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
-                        numbers[randomIndex] = random.Next(1000);
+                        numbers[randomIndex] = random.Next(1000) + random.NextDouble();
                     }
                     return numbers;
 
@@ -575,6 +575,13 @@ namespace Lab1
                     return numbers;
 
                 default:
+                    int size = (int.MaxValue / 4);
+                    numbers = new double[size];
+                    Random test = new Random();
+                    for (int randomIndex = 0; randomIndex < (int.MaxValue / 4); ++randomIndex)
+                    {
+                        numbers[randomIndex] = test.Next(1000) + test.NextDouble();
+                    }
                     return numbers;
             }
         }
@@ -605,7 +612,7 @@ namespace Lab1
             if (isFastActive)
             {
                 namesOfMethods[2] = "Быстрая сортировка";
-                var output = FastSort(arrayToSort, isIncreasingSort);
+                var output = FastSort(array, isIncreasingSort);
                 iterationsOfMethods[2] = output.Item1;
                 timeOfMethods[2] = output.Item2;
             }

@@ -38,15 +38,15 @@ namespace Lab1
 
         void ISortView.ChooseInput(double[] inputArray)
         {
-            dataGridView1.Rows.Clear();           
-            dataGridView1.Visible = true;           
+            dataGridView1.Rows.Clear();
+            dataGridView1.Visible = true;
             if (Double.IsNaN(inputArray[0]))
             {
                 MessageBox.Show("Вводите числа в столбцы. Дробь пишется через запятую, пустая ячейка - последнее число.", "Ввод доступен", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                foreach(var number in inputArray)
+                foreach (var number in inputArray)
                 {
                     dataGridView1.Rows.Add(number);
                 }
@@ -182,14 +182,13 @@ namespace Lab1
             }
         }
 
-        
+
 
         public event EventHandler<EventArgs> AddData;
         public event EventHandler<EventArgs> Sort;
 
         private void toolStripTextBox1_Click(object sender, EventArgs inputEvent)
         {
-            
             AddData(sender, inputEvent);
         }
 
@@ -200,8 +199,9 @@ namespace Lab1
 
         private void chooseFileButton_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                path  = openFileDialog1.FileName;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                path = openFileDialog1.FileName;
             }
         }
 
@@ -210,6 +210,12 @@ namespace Lab1
         {
             dataGridView.CurrentCell = dataGridView.Rows[0].Cells[0];
             dataGridView.BeginEdit(true);
+        }
+
+        private void testingButton_Click(object sender, EventArgs inputEvent)
+        {
+            AddData(sender, inputEvent);
+            Sort(sender, inputEvent);
         }
     }
 }
