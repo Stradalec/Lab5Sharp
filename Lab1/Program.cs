@@ -605,8 +605,9 @@ namespace Lab1
             if (isFastActive)
             {
                 namesOfMethods[2] = "Быстрая сортировка";
-                iterationsOfMethods[2] = FastSort(arrayToSort, isIncreasingSort);;
-                timeOfMethods[2] = 1;
+                var output = FastSort(arrayToSort, isIncreasingSort);
+                iterationsOfMethods[2] = output.Item1;
+                timeOfMethods[2] = output.Item2;
             }
             MakeNewMassive(arrayToSort, array);
             if (isShakeActive)
@@ -725,13 +726,18 @@ namespace Lab1
         }
 
         
-        private int FastSort(double[] arrayToSort, bool isIncreasingSort)
+        private (int, double) FastSort(double[] arrayToSort, bool isIncreasingSort)
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            double timeOfFast;
             double[] copied = new double[arrayToSort.Length];
             MakeNewMassive(arrayToSort, copied);
             fastIterations = 0;
-            Sort(copied, isIncreasingSort, 1, copied.Length - 1);
-            return fastIterations;
+            Sort(copied, isIncreasingSort, 0, copied.Length - 1);
+            timer.Stop();
+            timeOfFast = timer.Elapsed.TotalSeconds;
+            return (fastIterations, timeOfFast);
         }
          
         private void Sort(double[] array,  bool isIncreasingSort, int lowIndex, int upIndex)
