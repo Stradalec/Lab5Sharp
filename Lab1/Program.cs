@@ -731,10 +731,8 @@ namespace Lab1
             Stopwatch timer = new Stopwatch();
             timer.Start();
             double timeOfFast;
-            double[] copied = new double[arrayToSort.Length];
-            MakeNewMassive(arrayToSort, copied);
             fastIterations = 0;
-            Sort(copied, isIncreasingSort, 0, copied.Length - 1);
+            Sort(arrayToSort, isIncreasingSort, 0, arrayToSort.Length - 1);
             timer.Stop();
             timeOfFast = timer.Elapsed.TotalSeconds;
             return (fastIterations, timeOfFast);
