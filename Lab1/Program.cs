@@ -88,6 +88,7 @@ namespace Lab1
         private int fastIterations;
         public event EventHandler<ProgressEventArgs> ProgressChanged;
 
+
         protected virtual void OnProgressChanged(ProgressEventArgs inputEvent) 
         {
             ProgressChanged?.Invoke(this, inputEvent);
