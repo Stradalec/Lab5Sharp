@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Lab1
 {
-    public partial class Sortings : Form, ISortView
+    public partial class Sortings : Form, ISortView, IProgressBar
     {
         string path = "temporary";
         public Sortings()
@@ -182,7 +182,10 @@ namespace Lab1
             }
         }
 
-
+        public void UpdateProgress(int progress)
+        {
+            progressBar1.Value = progress;
+        }
 
         public event EventHandler<EventArgs> AddData;
         public event EventHandler<EventArgs> Sort;

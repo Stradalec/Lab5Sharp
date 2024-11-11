@@ -22,6 +22,7 @@ using System.Net.Sockets;
 using NPOI.HPSF;
 using System.Windows.Navigation;
 using System.Windows.Media.Media3D;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace Lab1
 {
@@ -66,6 +67,7 @@ namespace Lab1
 
         double SwampsIterations();
 
+        void UpdateProgress(int progress);
         void ChooseInput(double[] inputArray);
         void ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime);
         bool IsIncreasing();
@@ -75,11 +77,26 @@ namespace Lab1
         event EventHandler<EventArgs> Sort;
     }
 
+    interface IProgressBar
+    {
+        void UpdateProgress(int progress);
+    }
 
     // Модель. Основная часть работы программы происходит здесь
     class Model
     {
         private int fastIterations;
+        public event EventHandler<ProgressEventArgs> ProgressChanged;
+
+        protected virtual void OnProgressChanged(ProgressEventArgs inputEvent) 
+        {
+            ProgressChanged?.Invoke(this, inputEvent);
+        }
+
+        private int GetProgress(int doneIterations, int allIterations)
+        {
+            return Convert.ToInt32(doneIterations / Convert.ToDouble(allIterations) * 100);
+        } 
         public PlotModel CreateGraph(double interval, double downLimitation, double upLimitation, string function)
         {
             double limit = Convert.ToDouble(interval);
@@ -542,9 +559,12 @@ namespace Lab1
 
                 case 2:
                     Random random = new Random();
+                    int currentProgress = 0;
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
                         numbers[randomIndex] = random.Next(1000) + random.NextDouble();
+                        currentProgress = GetProgress(randomIndex, arraySize);
+                        OnProgressChanged(new ProgressEventArgs(currentProgress));
                     }
                     return numbers;
 
@@ -945,10 +965,18 @@ namespace Lab1
         }
     }
 
+    public class ProgressEventArgs : EventArgs 
+    {
+        public int Progress {  get;  set; }
 
+        public ProgressEventArgs(int progress)
+        {
+            Progress = progress;
+        }
+    }
 
     // Презентер. Извлекает данные из модели, передает в вид. Обрабатывает события
-    class Presenter
+    class Presenter : IProgressBar
     {
         private IView mainView;
         private ISortView sortView;
@@ -970,9 +998,15 @@ namespace Lab1
         {
             sortView = inputView;
             model = new Model();
+            model.ProgressChanged += ProgressChanged;
 
             sortView.AddData += new EventHandler<EventArgs>(AddData);
             sortView.Sort += new EventHandler<EventArgs>(Sort);
+        }
+
+        private void ProgressChanged(object sender, ProgressEventArgs inputEvent)
+        {
+            UpdateProgress(inputEvent.Progress);
         }
 
         private void AddData(object sender, EventArgs inputEvent)
@@ -1015,6 +1049,10 @@ namespace Lab1
         {
             var output = model.Descent(mainView.returnFunction(), mainView.firstSide(), mainView.epsilon(), mainView.secondSide(), mainView.iterationCount(), mainView.Choice(), mainView.MinimumOrMaximum());
             mainView.ShowResult(output.Item1, output.Item2);
+        }
+        public void UpdateProgress(int progress)
+        {
+            sortView.UpdateProgress(progress);
         }
     }
 
