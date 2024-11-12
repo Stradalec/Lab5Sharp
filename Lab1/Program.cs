@@ -94,10 +94,7 @@ namespace Lab1
             ProgressChanged?.Invoke(this, inputEvent);
         }
 
-        private int GetProgress(int doneIterations, int allIterations)
-        {
-            return Convert.ToInt32(doneIterations / Convert.ToDouble(allIterations) * 100);
-        } 
+        
         public PlotModel CreateGraph(double interval, double downLimitation, double upLimitation, string function)
         {
             double limit = Convert.ToDouble(interval);
@@ -560,12 +557,9 @@ namespace Lab1
 
                 case 2:
                     Random random = new Random();
-                    int currentProgress = 0;
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
                         numbers[randomIndex] = random.Next(1000) + random.NextDouble();
-                        currentProgress = GetProgress(randomIndex, arraySize);
-                        OnProgressChanged(new ProgressEventArgs(currentProgress));
                     }
                     return numbers;
 
@@ -596,10 +590,10 @@ namespace Lab1
                     return numbers;
 
                 default:
-                    int size = (int.MaxValue / 4);
+                    int size = (5);
                     numbers = new double[size];
                     Random test = new Random();
-                    for (int randomIndex = 0; randomIndex < (int.MaxValue / 4); ++randomIndex)
+                    for (int randomIndex = 0; randomIndex < (5); ++randomIndex)
                     {
                         numbers[randomIndex] = test.Next(1000) + test.NextDouble();
                     }

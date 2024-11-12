@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,11 +16,53 @@ namespace Lab1
 {
     public partial class Sortings : Form, ISortView, IProgressBar
     {
+        BackgroundWorker _backgroundWorker = new BackgroundWorker();
         string path = "temporary";
+        private double[] savedArray;
+        private int _progress = 0;
+
         public Sortings()
         {
             InitializeComponent();
             Presenter presenter = new Presenter(this);
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.WorkerSupportsCancellation = true;
+            _backgroundWorker.WorkerReportsProgress = true;
+            _backgroundWorker.DoWork += _backgroundWorkerDoWork;
+            _backgroundWorker.ProgressChanged += _backgroundWorkerProgressChanged;
+            _backgroundWorker.RunWorkerCompleted += _backgroundWorkerRunWorkerCompleted;
+        }
+
+        private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent) {
+            List <double> list = new List <double>();
+            for (int inputIndex = 0; inputIndex < savedArray.Length; ++inputIndex)
+            {
+                list.Add (savedArray[inputIndex]);
+                _progress = GetProgress(inputIndex, savedArray.Length);
+                _backgroundWorker.ReportProgress(_progress);
+            }
+            inputEvent.Result = list;
+        }
+
+        private void _backgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs inputEvent)
+        {
+            List<double> dataList = (List<double>)inputEvent.Result;
+            foreach(double data in dataList)
+            {
+                dataGridView1.Rows.Add(data);
+            }
+            MessageBox.Show("о");
+        }
+
+        private void _backgroundWorkerProgressChanged(object sender, EventArgs inputEvent)
+        {
+            progressBar1.Value = _progress;
+        }
+
+
+        private int GetProgress(int doneIterations, int allIterations)
+        {
+            return Convert.ToInt32(doneIterations / Convert.ToDouble(allIterations) * 100);
         }
 
         int ISortView.ArraySizeToRandom()
@@ -46,10 +89,8 @@ namespace Lab1
             }
             else
             {
-                foreach (var number in inputArray)
-                {
-                    dataGridView1.Rows.Add(number);
-                }
+                savedArray = inputArray;
+                _backgroundWorker.RunWorkerAsync();
             }
 
         }
