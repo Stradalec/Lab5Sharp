@@ -90,7 +90,7 @@ namespace Lab1
             }
             else
             {
-                _backgroundWorker.RunWorkerAsync(inputArray);
+                savedArray = inputArray;            
             }
 
         }
@@ -234,6 +234,7 @@ namespace Lab1
         private void toolStripTextBox1_Click(object sender, EventArgs inputEvent)
         {
             AddData(sender, inputEvent);
+            _backgroundWorker.RunWorkerAsync(savedArray);
         }
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
