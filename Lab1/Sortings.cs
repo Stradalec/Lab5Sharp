@@ -260,7 +260,8 @@ namespace Lab1
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
             AddData(sender, inputEvent);
-            Sort(sender, inputEvent);
+            _backgroundWorker.RunWorkerAsync(savedArray);
+            
         }
     }
 }
