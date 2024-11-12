@@ -590,10 +590,10 @@ namespace Lab1
                     return numbers;
 
                 default:
-                    int size = (5);
+                    int size = (10000);
                     numbers = new double[size];
                     Random test = new Random();
-                    for (int randomIndex = 0; randomIndex < (5); ++randomIndex)
+                    for (int randomIndex = 0; randomIndex < (10000); ++randomIndex)
                     {
                         numbers[randomIndex] = test.Next(1000) + test.NextDouble();
                     }
