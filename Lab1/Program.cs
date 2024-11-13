@@ -77,22 +77,14 @@ namespace Lab1
         event EventHandler<EventArgs> Sort;
     }
 
-    interface IProgressBar
-    {
-        void UpdateProgress(int progress);
-    }
+
 
     // Модель. Основная часть работы программы происходит здесь
     class Model
     {
         private int fastIterations;
-        public event EventHandler<ProgressEventArgs> ProgressChanged;
 
 
-        protected virtual void OnProgressChanged(ProgressEventArgs inputEvent) 
-        {
-            ProgressChanged?.Invoke(this, inputEvent);
-        }
 
         
         public PlotModel CreateGraph(double interval, double downLimitation, double upLimitation, string function)
@@ -960,18 +952,9 @@ namespace Lab1
         }
     }
 
-    public class ProgressEventArgs : EventArgs 
-    {
-        public int Progress {  get;  set; }
-
-        public ProgressEventArgs(int progress)
-        {
-            Progress = progress;
-        }
-    }
 
     // Презентер. Извлекает данные из модели, передает в вид. Обрабатывает события
-    class Presenter : IProgressBar
+    class Presenter
     {
         private IView mainView;
         private ISortView sortView;
@@ -993,16 +976,11 @@ namespace Lab1
         {
             sortView = inputView;
             model = new Model();
-            model.ProgressChanged += ProgressChanged;
 
             sortView.AddData += new EventHandler<EventArgs>(AddData);
             sortView.Sort += new EventHandler<EventArgs>(Sort);
         }
 
-        private void ProgressChanged(object sender, ProgressEventArgs inputEvent)
-        {
-            UpdateProgress(inputEvent.Progress);
-        }
 
         private void AddData(object sender, EventArgs inputEvent)
         {
@@ -1044,10 +1022,6 @@ namespace Lab1
         {
             var output = model.Descent(mainView.returnFunction(), mainView.firstSide(), mainView.epsilon(), mainView.secondSide(), mainView.iterationCount(), mainView.Choice(), mainView.MinimumOrMaximum());
             mainView.ShowResult(output.Item1, output.Item2);
-        }
-        public void UpdateProgress(int progress)
-        {
-            sortView.UpdateProgress(progress);
         }
     }
 

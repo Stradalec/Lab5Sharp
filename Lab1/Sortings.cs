@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace Lab1
 {
-    public partial class Sortings : Form, ISortView, IProgressBar
+    public partial class Sortings : Form, ISortView
     {
         BackgroundWorker _backgroundWorker = new BackgroundWorker();
         string path = "temporary";
@@ -260,8 +260,7 @@ namespace Lab1
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
             AddData(sender, inputEvent);
-            _backgroundWorker.RunWorkerAsync(savedArray);
-            
+            Sort(sender, inputEvent);
         }
     }
 }
