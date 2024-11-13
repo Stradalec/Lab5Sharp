@@ -21,7 +21,12 @@ namespace Lab1
         string path = "temporary";
         private double[] savedArray;
         private int _progress = 0;
-        private SynchronizationContext _syncContext;
+        private Size formOriginalSize;
+        private Rectangle recSortGroup;
+        private Rectangle recInputGroup;
+        private Rectangle recIncreaseGroup;
+        private Rectangle recInputData;
+        private Rectangle recSortingsResults;
 
         public Sortings()
         {
@@ -33,7 +38,12 @@ namespace Lab1
             _backgroundWorker.DoWork += _backgroundWorkerDoWork;
             _backgroundWorker.ProgressChanged += _backgroundWorkerProgressChanged;
             _backgroundWorker.RunWorkerCompleted += _backgroundWorkerRunWorkerCompleted;
-            _syncContext = SynchronizationContext.Current;
+            formOriginalSize = this.Size;
+            recSortGroup = new Rectangle(sortGroup.Location, sortGroup.Size);
+            recInputGroup = new Rectangle(inputBox.Location, inputBox.Size);
+            recSortingsResults = new Rectangle(dataGridView2.Location, dataGridView2.Size);
+            recIncreaseGroup = new Rectangle(groupBox1.Location, groupBox1.Size);
+            recInputData = new Rectangle(dataGridView1.Location, dataGridView1.Size);
         }
 
         private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent) {
@@ -46,6 +56,29 @@ namespace Lab1
                 _backgroundWorker.ReportProgress(progress);
             }
             inputEvent.Result = list;
+        }
+
+        private void AutoResize(Control control, Rectangle rectangle)
+        {
+            double xRatio = (double)(this.Width) / (double)(formOriginalSize.Width);
+            double yRatio = (double)(this.Height) / (double)(formOriginalSize.Height);
+            int newX = (int)(rectangle.X * xRatio);
+            int newY = (int)(rectangle.Y * yRatio);
+
+            int newWidth = (int)(rectangle.Width * xRatio);
+            int newHeight = (int)(rectangle.Height * yRatio);
+
+            control.Location = new Point(newX, newY);
+            control.Size = new Size(newWidth, newHeight);
+        }
+
+        private void SortingsForm_Resize(object sender, EventArgs e)
+        {
+            AutoResize(sortGroup, recSortGroup);
+            AutoResize(inputBox, recInputGroup);
+            AutoResize(dataGridView2, recSortingsResults);
+            AutoResize(groupBox1, recIncreaseGroup);
+            AutoResize(dataGridView1, recInputData);
         }
 
         private void _backgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs inputEvent)
