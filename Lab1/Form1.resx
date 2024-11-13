@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox2.Text" xml:space="preserve">
+    <value>Метод Золотого Сечения
+Используется для нахождения минимума или максимума функции.
+Деление заданного интервала в пропорции золотого сечения. Результат - середина финального отрезка.
+Метод хорош для плоских задач.
+
+</value>
+  </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>Метод Дихотомии (половинного деления)
+Используется для нахождения корня уравнения f(x) = 0.
+Сущность метода - постепенное приближение к точке пересечения, находящейся в заданном интервале.
+Результат - середина найденного отрезка.
+ </value>
+  </data>
 </root>
