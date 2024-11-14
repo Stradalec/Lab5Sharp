@@ -118,6 +118,7 @@
             // 
             // sortGroup
             // 
+            sortGroup.AutoSize = true;
             sortGroup.Controls.Add(label1);
             sortGroup.Controls.Add(iterationsSwamp);
             sortGroup.Controls.Add(bubble);
@@ -128,7 +129,7 @@
             sortGroup.Location = new System.Drawing.Point(12, 30);
             sortGroup.Margin = new System.Windows.Forms.Padding(5);
             sortGroup.Name = "sortGroup";
-            sortGroup.Size = new System.Drawing.Size(216, 179);
+            sortGroup.Size = new System.Drawing.Size(216, 195);
             sortGroup.TabIndex = 5;
             sortGroup.TabStop = false;
             sortGroup.Text = "Сортировки";
@@ -151,6 +152,7 @@
             // 
             // inputBox
             // 
+            inputBox.AutoSize = true;
             inputBox.Controls.Add(chooseFileButton);
             inputBox.Controls.Add(label2);
             inputBox.Controls.Add(randomArray);
@@ -159,7 +161,7 @@
             inputBox.Controls.Add(hand);
             inputBox.Location = new System.Drawing.Point(245, 30);
             inputBox.Name = "inputBox";
-            inputBox.Size = new System.Drawing.Size(194, 124);
+            inputBox.Size = new System.Drawing.Size(194, 137);
             inputBox.TabIndex = 6;
             inputBox.TabStop = false;
             inputBox.Text = "Тип ввода";
@@ -296,11 +298,12 @@
             // 
             // groupBox1
             // 
+            groupBox1.AutoSize = true;
             groupBox1.Controls.Add(decreasing);
             groupBox1.Controls.Add(increasing);
             groupBox1.Location = new System.Drawing.Point(245, 160);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(194, 49);
+            groupBox1.Size = new System.Drawing.Size(194, 63);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Сортировка по:";

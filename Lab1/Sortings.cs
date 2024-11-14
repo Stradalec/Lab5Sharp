@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +28,12 @@ namespace Lab1
         private Rectangle recIncreaseGroup;
         private Rectangle recInputData;
         private Rectangle recSortingsResults;
+        private Rectangle recBubble;
+        private Rectangle recInserts;
+        private Rectangle recFast;
+        private Rectangle recShake;
+        private Rectangle recSwamp;
+
 
         public Sortings()
         {
@@ -44,6 +51,11 @@ namespace Lab1
             recSortingsResults = new Rectangle(dataGridView2.Location, dataGridView2.Size);
             recIncreaseGroup = new Rectangle(groupBox1.Location, groupBox1.Size);
             recInputData = new Rectangle(dataGridView1.Location, dataGridView1.Size);
+            recBubble = new Rectangle(bubble.Location, bubble.Size);
+            recInserts = new Rectangle(inserts.Location, inserts.Size);
+            recFast = new Rectangle(fast.Location, fast.Size);
+            recShake = new Rectangle(shake.Location, shake.Size);
+            recSwamp = new Rectangle(swamp.Location, swamp.Size);
         }
 
         private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent) {
@@ -79,6 +91,11 @@ namespace Lab1
             AutoResize(dataGridView2, recSortingsResults);
             AutoResize(groupBox1, recIncreaseGroup);
             AutoResize(dataGridView1, recInputData);
+            AutoResize(bubble, recBubble);
+            AutoResize(inserts, recInserts);
+            AutoResize(fast, recFast);
+            AutoResize(shake, recShake);
+            AutoResize(swamp, recSwamp);
         }
 
         private void _backgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs inputEvent)
@@ -88,15 +105,13 @@ namespace Lab1
             {
                 dataGridView1.Rows.Add(data);
             }
-            MessageBox.Show("о");
+            MessageBox.Show("Ввод завершён");
         }
 
         private void _backgroundWorkerProgressChanged(object sender, ProgressChangedEventArgs inputEvent)
         {
             progressBar1.Value = inputEvent.ProgressPercentage;
         }
-
-
 
 
         int ISortView.ArraySizeToRandom()
@@ -119,6 +134,7 @@ namespace Lab1
             dataGridView1.Visible = true;
             if (Double.IsNaN(inputArray[0]))
             {
+                savedArray = inputArray;
                 MessageBox.Show("Вводите числа в столбцы. Дробь пишется через запятую, пустая ячейка - последнее число.", "Ввод доступен", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -267,7 +283,10 @@ namespace Lab1
         private void toolStripTextBox1_Click(object sender, EventArgs inputEvent)
         {
             AddData(sender, inputEvent);
-            _backgroundWorker.RunWorkerAsync(savedArray);
+            if (!double.IsNaN(savedArray[0])) 
+            {
+                _backgroundWorker.RunWorkerAsync(savedArray);
+            } 
         }
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
@@ -295,5 +314,23 @@ namespace Lab1
             AddData(sender, inputEvent);
             Sort(sender, inputEvent);
         }
+        private bool ValidateText()
+        {
+            Regex regex = new Regex(@"^[\d,-]+$");
+            bool result = true;
+            bool mathces;
+            if (string.IsNullOrEmpty(randomArray.Text) || (mathces = regex.IsMatch(randomArray.Text)) == false)
+            {
+                result = false;
+                MessageBox.Show("Ошибка ввода числа генерируемых чисел для массива", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (string.IsNullOrEmpty(iterationsSwamp.Text) || (mathces = regex.IsMatch(iterationsSwamp.Text)) == false)
+            {
+                result = false;
+                MessageBox.Show("Ошибка ввода числа итераций для болотной сортировки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
+            return result;
+        }
     }
+    
 }

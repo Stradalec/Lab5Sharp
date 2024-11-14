@@ -83,10 +83,7 @@ namespace Lab1
     class Model
     {
         private int fastIterations;
-
-
-
-        
+      
         public PlotModel CreateGraph(double interval, double downLimitation, double upLimitation, string function)
         {
             double limit = Convert.ToDouble(interval);
