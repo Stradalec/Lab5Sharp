@@ -58,6 +58,10 @@
             increasing = new System.Windows.Forms.RadioButton();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             progressBar1 = new System.Windows.Forms.ProgressBar();
+            left = new System.Windows.Forms.TextBox();
+            right = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -253,6 +257,7 @@
             // testingButton
             // 
             testingButton.Name = "testingButton";
+            testingButton.ReadOnly = true;
             testingButton.Size = new System.Drawing.Size(100, 23);
             testingButton.Text = "Тестирование";
             testingButton.Click += testingButton_Click;
@@ -336,16 +341,52 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(181, 246);
+            progressBar1.Location = new System.Drawing.Point(178, 400);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(100, 23);
             progressBar1.TabIndex = 11;
+            // 
+            // left
+            // 
+            left.Location = new System.Drawing.Point(178, 267);
+            left.Name = "left";
+            left.Size = new System.Drawing.Size(66, 23);
+            left.TabIndex = 12;
+            // 
+            // right
+            // 
+            right.Location = new System.Drawing.Point(178, 324);
+            right.Name = "right";
+            right.Size = new System.Drawing.Size(66, 23);
+            right.TabIndex = 13;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(178, 249);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(107, 15);
+            label3.TabIndex = 14;
+            label3.Text = "Нижний диапазон";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(178, 299);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(108, 15);
+            label4.TabIndex = 15;
+            label4.Text = "Верхний диапазон";
             // 
             // Sortings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(right);
+            Controls.Add(left);
             Controls.Add(progressBar1);
             Controls.Add(groupBox1);
             Controls.Add(dataGridView2);
@@ -402,5 +443,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.ToolStripTextBox testingButton;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox left;
+        private System.Windows.Forms.TextBox right;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }

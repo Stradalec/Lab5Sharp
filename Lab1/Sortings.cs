@@ -122,6 +122,25 @@ namespace Lab1
             }
             return Convert.ToInt32(randomArray.Text);
         }
+        
+        int ISortView.leftInterval()
+        {
+
+            if (left.Text.Length == 0)
+            {
+                return 10;
+            }
+            return Convert.ToInt32(left.Text);
+        }
+
+        int ISortView.rightInterval()
+        {
+            if (right.Text.Length == 0)
+            {
+                return 10;
+            }
+            return Convert.ToInt32(right.Text);
+        }
 
         string ISortView.PathToFile()
         {
@@ -282,16 +301,24 @@ namespace Lab1
 
         private void toolStripTextBox1_Click(object sender, EventArgs inputEvent)
         {
-            AddData(sender, inputEvent);
-            if (!double.IsNaN(savedArray[0])) 
+            if(ValidateText())
             {
-                _backgroundWorker.RunWorkerAsync(savedArray);
-            } 
+                AddData(sender, inputEvent);
+                if (!double.IsNaN(savedArray[0]))
+                {
+                    _backgroundWorker.RunWorkerAsync(savedArray);
+                }
+            }
+            
         }
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
         {
-            Sort(sender, inputEvent);
+            if (ValidateText()) 
+            {
+                Sort(sender, inputEvent);
+            }
+            
         }
 
         private void chooseFileButton_Click(object sender, EventArgs e)
@@ -311,6 +338,7 @@ namespace Lab1
 
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
+            ValidateText();
             AddData(sender, inputEvent);
             Sort(sender, inputEvent);
         }
@@ -328,7 +356,17 @@ namespace Lab1
             {
                 result = false;
                 MessageBox.Show("Ошибка ввода числа итераций для болотной сортировки", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
+            }
+            else if (string.IsNullOrEmpty(left.Text) || (mathces = regex.IsMatch(left.Text)) == false)
+            {
+                result = false;
+                MessageBox.Show("Ошибка ввода левого значения интервала", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (string.IsNullOrEmpty(right.Text) || (mathces = regex.IsMatch(right.Text)) == false)
+            {
+                result = false;
+                MessageBox.Show("Ошибка ввода правого значения интервала", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             return result;
         }
     }

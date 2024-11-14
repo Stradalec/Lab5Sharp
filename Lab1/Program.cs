@@ -56,6 +56,8 @@ namespace Lab1
 
         int ArraySizeToRandom();
 
+        int leftInterval();
+        int rightInterval();    
         string PathToFile();
 
         bool IsActiveBubble();
@@ -535,7 +537,7 @@ namespace Lab1
         }
 
 
-        public double[] ChooseInput(byte inputChoice, string pathToFile, int arraySize = 10)
+        public double[] ChooseInput(byte inputChoice, string pathToFile, int leftLimit, int rightLimit, int arraySize = 10)
         {
             double[] numbers = new double[arraySize];
             switch (inputChoice)
@@ -548,33 +550,45 @@ namespace Lab1
                     Random random = new Random();
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
-                        numbers[randomIndex] = random.Next(1000) + random.NextDouble();
+                        numbers[randomIndex] = random.Next(-leftLimit, rightLimit) + random.NextDouble();
                     }
                     return numbers;
 
                 case 3:
                     if (pathToFile != "temporary")
                     {
-                        using (FileStream file = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
+                        if (pathToFile.Contains("xlsx"))  
                         {
-                            IWorkbook workbook = new XSSFWorkbook(file);
-                            ISheet sheet = workbook.GetSheetAt(0);
-                            numbers = new double[sheet.LastRowNum + 1];
-
-                            for (int excelIndex = 0; excelIndex <= sheet.LastRowNum; ++excelIndex)
+                            using (FileStream file = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
                             {
-                                IRow currentrow = sheet.GetRow(excelIndex);
-                                if (currentrow != null)
-                                {
-                                    ICell cell = currentrow.GetCell(0);
-                                    if (cell != null)
-                                    {
-                                        numbers[excelIndex] = cell.NumericCellValue;
-                                    }
-                                }
+                                IWorkbook workbook = new XSSFWorkbook(file);
+                                ISheet sheet = workbook.GetSheetAt(0);
+                                numbers = new double[sheet.LastRowNum + 1];
 
+                                for (int excelIndex = 0; excelIndex <= sheet.LastRowNum; ++excelIndex)
+                                {
+                                    IRow currentrow = sheet.GetRow(excelIndex);
+                                    if (currentrow != null)
+                                    {
+                                        ICell cell = currentrow.GetCell(0);
+                                        if (cell != null)
+                                        {
+                                            numbers[excelIndex] = cell.NumericCellValue;
+                                        }
+                                    }
+
+                                }
                             }
                         }
+                        else if (pathToFile.Contains("txt")) 
+                        {
+                            string[] lines = File.ReadAllLines(pathToFile);
+                            for (int inputIndex = 0;  inputIndex < lines.Length; ++inputIndex)
+                            {
+                                numbers[inputIndex] = Convert.ToDouble(lines[inputIndex]);
+                            }
+                        }
+                        
                     }
                     return numbers;
 
@@ -981,7 +995,7 @@ namespace Lab1
 
         private void AddData(object sender, EventArgs inputEvent)
         {
-            var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.ArraySizeToRandom());
+            var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.leftInterval(), sortView.rightInterval(), sortView.ArraySizeToRandom());
             sortView.ChooseInput(output);
         }
 
