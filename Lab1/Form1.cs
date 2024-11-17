@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Lab1
@@ -47,6 +48,12 @@ namespace Lab1
         {
             Sortings sortings = new Sortings();
             sortings.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Warning warning = new Warning();
+            warning.Show();
         }
     }
 }

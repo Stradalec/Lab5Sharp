@@ -35,12 +35,15 @@
             richTextBox4 = new System.Windows.Forms.RichTextBox();
             richTextBox3 = new System.Windows.Forms.RichTextBox();
             richTextBox2 = new System.Windows.Forms.RichTextBox();
-            coordinateDescentButton = new System.Windows.Forms.Button();
-            NewtonButton = new System.Windows.Forms.Button();
-            GoldenRatioButton = new System.Windows.Forms.Button();
-            sortingsButton = new System.Windows.Forms.Button();
             richTextBox1 = new System.Windows.Forms.RichTextBox();
+            coordinateDescentButton = new System.Windows.Forms.Button();
+            sortingsButton = new System.Windows.Forms.Button();
+            GoldenRatioButton = new System.Windows.Forms.Button();
+            NewtonButton = new System.Windows.Forms.Button();
             pictureBox1 = new System.Windows.Forms.PictureBox();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            button1 = new System.Windows.Forms.Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -130,6 +133,15 @@
             richTextBox2.TabIndex = 6;
             richTextBox2.Text = resources.GetString("richTextBox2.Text");
             // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new System.Drawing.Point(128, 5);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new System.Drawing.Size(667, 46);
+            richTextBox1.TabIndex = 5;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
             // coordinateDescentButton
             // 
             coordinateDescentButton.AutoSize = true;
@@ -142,32 +154,6 @@
             coordinateDescentButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             coordinateDescentButton.UseVisualStyleBackColor = true;
             coordinateDescentButton.Click += coordinateDescentButton_Click;
-            // 
-            // NewtonButton
-            // 
-            NewtonButton.AutoSize = true;
-            NewtonButton.Location = new System.Drawing.Point(817, 129);
-            NewtonButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            NewtonButton.Name = "NewtonButton";
-            NewtonButton.Size = new System.Drawing.Size(192, 54);
-            NewtonButton.TabIndex = 2;
-            NewtonButton.Text = "Метод Ньютона";
-            NewtonButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            NewtonButton.UseVisualStyleBackColor = true;
-            NewtonButton.Click += NewtonButton_Click;
-            // 
-            // GoldenRatioButton
-            // 
-            GoldenRatioButton.AutoSize = true;
-            GoldenRatioButton.Location = new System.Drawing.Point(817, 67);
-            GoldenRatioButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            GoldenRatioButton.Name = "GoldenRatioButton";
-            GoldenRatioButton.Size = new System.Drawing.Size(192, 54);
-            GoldenRatioButton.TabIndex = 1;
-            GoldenRatioButton.Text = "Метод Золотого Сечения";
-            GoldenRatioButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            GoldenRatioButton.UseVisualStyleBackColor = true;
-            GoldenRatioButton.Click += GoldenRatioButton_Click;
             // 
             // sortingsButton
             // 
@@ -182,14 +168,31 @@
             sortingsButton.UseVisualStyleBackColor = true;
             sortingsButton.Click += sortingsButton_Click;
             // 
-            // richTextBox1
+            // GoldenRatioButton
             // 
-            richTextBox1.Location = new System.Drawing.Point(128, 5);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new System.Drawing.Size(667, 46);
-            richTextBox1.TabIndex = 5;
-            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            GoldenRatioButton.AutoSize = true;
+            GoldenRatioButton.Location = new System.Drawing.Point(817, 67);
+            GoldenRatioButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            GoldenRatioButton.Name = "GoldenRatioButton";
+            GoldenRatioButton.Size = new System.Drawing.Size(192, 54);
+            GoldenRatioButton.TabIndex = 1;
+            GoldenRatioButton.Text = "Метод Золотого Сечения";
+            GoldenRatioButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            GoldenRatioButton.UseVisualStyleBackColor = true;
+            GoldenRatioButton.Click += GoldenRatioButton_Click;
+            // 
+            // NewtonButton
+            // 
+            NewtonButton.AutoSize = true;
+            NewtonButton.Location = new System.Drawing.Point(817, 129);
+            NewtonButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            NewtonButton.Name = "NewtonButton";
+            NewtonButton.Size = new System.Drawing.Size(192, 54);
+            NewtonButton.TabIndex = 2;
+            NewtonButton.Text = "Метод Ньютона";
+            NewtonButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            NewtonButton.UseVisualStyleBackColor = true;
+            NewtonButton.Click += NewtonButton_Click;
             // 
             // pictureBox1
             // 
@@ -202,12 +205,46 @@
             pictureBox1.TabIndex = 10;
             pictureBox1.TabStop = false;
             // 
+            // label1
+            // 
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
+            label1.AutoSize = true;
+            label1.Font = new System.Drawing.Font("Segoe UI", 15F);
+            label1.Location = new System.Drawing.Point(355, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(313, 28);
+            label1.TabIndex = 2;
+            label1.Text = "Численные методы (и не только)";
+            // 
+            // label2
+            // 
+            label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(326, 43);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(374, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Перед использованием рекомендуется ознакомиться со справкой";
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(705, 43);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(75, 23);
+            button1.TabIndex = 4;
+            button1.Text = "Справка";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             ClientSize = new System.Drawing.Size(1057, 614);
+            Controls.Add(button1);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(tableLayoutPanel1);
             DoubleBuffered = true;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -234,6 +271,9 @@
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
     }
 }
 
