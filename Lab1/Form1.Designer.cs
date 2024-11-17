@@ -40,7 +40,9 @@
             GoldenRatioButton = new System.Windows.Forms.Button();
             sortingsButton = new System.Windows.Forms.Button();
             richTextBox1 = new System.Windows.Forms.RichTextBox();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
             tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // dichotomyButton
@@ -75,6 +77,7 @@
             tableLayoutPanel1.Controls.Add(dichotomyButton, 2, 0);
             tableLayoutPanel1.Controls.Add(GoldenRatioButton, 2, 1);
             tableLayoutPanel1.Controls.Add(NewtonButton, 2, 2);
+            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
             tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             tableLayoutPanel1.Location = new System.Drawing.Point(11, 72);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
@@ -188,6 +191,17 @@
             richTextBox1.TabIndex = 5;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
+            pictureBox1.Image = (System.Drawing.Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new System.Drawing.Point(7, 5);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(110, 54);
+            pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 10;
+            pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -201,6 +215,7 @@
             Text = "Приложение";
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -218,6 +233,7 @@
         private System.Windows.Forms.RichTextBox richTextBox4;
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.RichTextBox richTextBox5;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
