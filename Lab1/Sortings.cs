@@ -21,6 +21,7 @@ namespace Lab1
         BackgroundWorker _backgroundWorker = new BackgroundWorker();
         string path = "temporary";
         private double[] savedArray;
+        private bool _isTest = false;
         private int _progress = 0;
         private Size formOriginalSize;
         private Rectangle recSortGroup;
@@ -33,6 +34,7 @@ namespace Lab1
         private Rectangle recFast;
         private Rectangle recShake;
         private Rectangle recSwamp;
+        
 
 
         public Sortings()
@@ -105,7 +107,13 @@ namespace Lab1
             {
                 dataGridView1.Rows.Add(data);
             }
+            if (_isTest)
+            {
+                Sort(sender, inputEvent);
+                _isTest = false;
+            }
             MessageBox.Show("Ввод завершён");
+            
         }
 
         private void _backgroundWorkerProgressChanged(object sender, ProgressChangedEventArgs inputEvent)
@@ -338,9 +346,19 @@ namespace Lab1
 
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
-            ValidateText();
-            AddData(sender, inputEvent);
-            Sort(sender, inputEvent);
+                _isTest = true;
+                if (hand.Checked || generation.Checked || file.Checked)
+                {
+                    hand.Checked = false; generation.Checked = false; file.Checked = false;
+                }
+                bubble.Checked = true;
+                inserts.Checked = true;
+                fast.Checked = true;
+                shake.Checked = true;
+                swamp.Checked = true;
+                AddData(sender, inputEvent);
+                _backgroundWorker.RunWorkerAsync(savedArray);
+            
         }
         private bool ValidateText()
         {
