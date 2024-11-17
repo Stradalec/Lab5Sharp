@@ -34,7 +34,7 @@ namespace Lab1
         private Rectangle recFast;
         private Rectangle recShake;
         private Rectangle recSwamp;
-        
+
 
 
         public Sortings()
@@ -60,12 +60,13 @@ namespace Lab1
             recSwamp = new Rectangle(swamp.Location, swamp.Size);
         }
 
-        private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent) {
+        private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent)
+        {
             double[] array = (double[])inputEvent.Argument;
-            List <double> list = new List <double>();
+            List<double> list = new List<double>();
             for (int inputIndex = 0; inputIndex < array.Length; ++inputIndex)
             {
-                list.Add (array[inputIndex]);
+                list.Add(array[inputIndex]);
                 int progress = Convert.ToInt32(inputIndex / Convert.ToDouble(array.Length) * 100);
                 _backgroundWorker.ReportProgress(progress);
             }
@@ -103,7 +104,7 @@ namespace Lab1
         private void _backgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs inputEvent)
         {
             List<double> dataList = (List<double>)inputEvent.Result;
-            foreach(double data in dataList)
+            foreach (double data in dataList)
             {
                 dataGridView1.Rows.Add(data);
             }
@@ -113,7 +114,7 @@ namespace Lab1
                 _isTest = false;
             }
             MessageBox.Show("Ввод завершён");
-            
+
         }
 
         private void _backgroundWorkerProgressChanged(object sender, ProgressChangedEventArgs inputEvent)
@@ -130,7 +131,7 @@ namespace Lab1
             }
             return Convert.ToInt32(randomArray.Text);
         }
-        
+
         int ISortView.leftInterval()
         {
 
@@ -166,7 +167,7 @@ namespace Lab1
             }
             else
             {
-                savedArray = inputArray;            
+                savedArray = inputArray;
             }
 
         }
@@ -309,7 +310,7 @@ namespace Lab1
 
         private void toolStripTextBox1_Click(object sender, EventArgs inputEvent)
         {
-            if(ValidateText())
+            if (ValidateText())
             {
                 AddData(sender, inputEvent);
                 if (!double.IsNaN(savedArray[0]))
@@ -317,16 +318,16 @@ namespace Lab1
                     _backgroundWorker.RunWorkerAsync(savedArray);
                 }
             }
-            
+
         }
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
         {
-            if (ValidateText()) 
+            if (ValidateText())
             {
                 Sort(sender, inputEvent);
             }
-            
+
         }
 
         private void chooseFileButton_Click(object sender, EventArgs e)
@@ -346,6 +347,9 @@ namespace Lab1
 
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
+            DialogResult result = MessageBox.Show("Вы переходите в тестовый режим. Введение тестового массива и его сортировка займут некоторое время. Вы уверены, что хотите перейти в тестовый режим?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes) 
+            {
                 _isTest = true;
                 if (hand.Checked || generation.Checked || file.Checked)
                 {
@@ -358,7 +362,13 @@ namespace Lab1
                 swamp.Checked = true;
                 AddData(sender, inputEvent);
                 _backgroundWorker.RunWorkerAsync(savedArray);
+            }
+            else
+            {
+                MessageBox.Show("Тестирование отменено.");
+            }
             
+
         }
         private bool ValidateText()
         {
@@ -388,5 +398,5 @@ namespace Lab1
             return result;
         }
     }
-    
+
 }

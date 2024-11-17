@@ -593,10 +593,10 @@ namespace Lab1
                     return numbers;
 
                 default:
-                    int size = (int.MaxValue / 2);
+                    int size = 100000;
                     numbers = new double[size];
                     Random test = new Random();
-                    for (int randomIndex = 0; randomIndex < int.MaxValue / 2; ++randomIndex)
+                    for (int randomIndex = 0; randomIndex < size; ++randomIndex)
                     {
                         numbers[randomIndex] = test.Next(int.MinValue, int.MaxValue) + test.NextDouble();
                     }
