@@ -183,9 +183,8 @@ namespace Lab1
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodName[index] });
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodIterations[index] });
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodTime[index] });
-                dataGridView2.Rows.Add(row);
                 _IsFilesExist = true;
-                if (sortedArrays.Count != 0) 
+                if (sortedArrays.Count != 0)
                 {
                     string tempFilePath = Path.Combine(Application.StartupPath, methodName[index].ToString());
                     List<string> strings = new List<string>();
@@ -195,8 +194,11 @@ namespace Lab1
                         strings.Add(number.ToString());
                     }
                     File.WriteAllLines(tempFilePath, strings);
+                    row.Cells.Add(new DataGridViewButtonCell { Value = tempFilePath });
                 }
+                dataGridView2.Rows.Add(row);
                 
+
             }
         }
 
@@ -362,7 +364,7 @@ namespace Lab1
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
             DialogResult result = MessageBox.Show("Вы переходите в тестовый режим. Введение тестового массива и его сортировка займут некоторое время. Вы уверены, что хотите перейти в тестовый режим?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes) 
+            if (result == DialogResult.Yes)
             {
                 _isTest = true;
                 if (hand.Checked || generation.Checked || file.Checked)
@@ -381,7 +383,7 @@ namespace Lab1
             {
                 MessageBox.Show("Тестирование отменено.");
             }
-            
+
 
         }
         private bool ValidateText()
@@ -414,15 +416,24 @@ namespace Lab1
 
         private void Sorting_FormClosed(object sender, FormClosedEventArgs closeEvent)
         {
-            if (_IsFilesExist) 
+            if (_IsFilesExist)
             {
                 string directoryPath = Application.StartupPath;
                 string[] files = Directory.GetFiles(directoryPath);
-                foreach (string file in files) 
+                foreach (string file in files)
                 {
                     File.Delete(file);
                 }
-            } 
+            }
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs inputEvent)
+        {
+            if (inputEvent.ColumnIndex == 3) 
+            {
+                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Value.ToString();
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("notepad.exe", path));
+            }
         }
     }
 

@@ -50,9 +50,6 @@
             dataGridView1 = new System.Windows.Forms.DataGridView();
             Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             dataGridView2 = new System.Windows.Forms.DataGridView();
-            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             groupBox1 = new System.Windows.Forms.GroupBox();
             decreasing = new System.Windows.Forms.RadioButton();
             increasing = new System.Windows.Forms.RadioButton();
@@ -62,6 +59,10 @@
             right = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
+            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Column4 = new System.Windows.Forms.DataGridViewButtonColumn();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -280,26 +281,12 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterations, Time });
+            dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterations, Time, Column4 });
             dataGridView2.Location = new System.Drawing.Point(12, 250);
             dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new System.Drawing.Size(325, 188);
+            dataGridView2.Size = new System.Drawing.Size(445, 188);
             dataGridView2.TabIndex = 9;
-            // 
-            // Method
-            // 
-            Method.HeaderText = "Метод";
-            Method.Name = "Method";
-            // 
-            // Iterations
-            // 
-            Iterations.HeaderText = "Итерации";
-            Iterations.Name = "Iterations";
-            // 
-            // Time
-            // 
-            Time.HeaderText = "Время";
-            Time.Name = "Time";
+            dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
             // groupBox1
             // 
@@ -378,6 +365,26 @@
             label4.TabIndex = 15;
             label4.Text = "Верхний диапазон";
             // 
+            // Method
+            // 
+            Method.HeaderText = "Метод";
+            Method.Name = "Method";
+            // 
+            // Iterations
+            // 
+            Iterations.HeaderText = "Итерации";
+            Iterations.Name = "Iterations";
+            // 
+            // Time
+            // 
+            Time.HeaderText = "Время";
+            Time.Name = "Time";
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Открыть файл";
+            Column4.Name = "Column4";
+            // 
             // Sortings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -438,14 +445,15 @@
         private System.Windows.Forms.TextBox randomArray;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button chooseFileButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.ToolStripTextBox testingButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox left;
         private System.Windows.Forms.TextBox right;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Method;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.DataGridViewButtonColumn Column4;
     }
 }
