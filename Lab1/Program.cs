@@ -618,7 +618,8 @@ namespace Lab1
                 namesOfMethods[0] = output.Item1;
                 iterationsOfMethods[0] = output.Item2;
                 timeOfMethods[0] = output.Item3;
-                sortedArrays.Add(output.Item4);
+                MakeNewMassive(output.Item4, array);
+                sortedArrays.Add(array.ToArray());
             }
             MakeNewMassive(arrayToSort, array);
             if (isInsertsActive)
@@ -627,7 +628,8 @@ namespace Lab1
                 namesOfMethods[1] = output.Item1;
                 iterationsOfMethods[1] = output.Item2;
                 timeOfMethods[1] = output.Item3;
-                sortedArrays.Add(output.Item4);
+                MakeNewMassive(output.Item4, array);
+                sortedArrays.Add(array.ToArray());
             }
             MakeNewMassive(arrayToSort, array);
             if (isFastActive)
@@ -636,7 +638,8 @@ namespace Lab1
                 var output = FastSort(array, isIncreasingSort);
                 iterationsOfMethods[2] = output.Item1;
                 timeOfMethods[2] = output.Item2;
-                sortedArrays.Add(output.Item3);
+                MakeNewMassive(output.Item3, array);
+                sortedArrays.Add(array.ToArray());
             }
             MakeNewMassive(arrayToSort, array);
             if (isShakeActive)
@@ -645,7 +648,8 @@ namespace Lab1
                 namesOfMethods[3] = output.Item1;
                 iterationsOfMethods[3] = output.Item2;
                 timeOfMethods[3] = output.Item3;
-                sortedArrays.Add(output.Item4);
+                MakeNewMassive(output.Item4, array);
+                sortedArrays.Add(array.ToArray());
             }
             MakeNewMassive(arrayToSort, array);
             if (isSwampActive)
@@ -654,7 +658,8 @@ namespace Lab1
                 namesOfMethods[4] = output.Item1;
                 iterationsOfMethods[4] = output.Item2;
                 timeOfMethods[4] = output.Item3;
-                sortedArrays.Add(output.Item4);
+                MakeNewMassive(output.Item4, array);
+                sortedArrays.Add(array.ToArray());
             }
             return (namesOfMethods, iterationsOfMethods, timeOfMethods, sortedArrays);
         }
