@@ -71,7 +71,7 @@ namespace Lab1
 
         void UpdateProgress(int progress);
         void ChooseInput(double[] inputArray);
-        void ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime);
+        void ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime, List<double[]> sortedArrays);
         bool IsIncreasing();
 
         double[] NumbersToSort();
@@ -604,11 +604,12 @@ namespace Lab1
             }
         }
 
-        public (string[], int[], double[]) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort)
+        public (string[], int[], double[], List<double[]>) Sorting(bool isBubbleActive, bool isInsertsActive, bool isFastActive, bool isShakeActive, bool isSwampActive, double swampIterations, double[] arrayToSort, bool isIncreasingSort)
         {
             string[] namesOfMethods = new string[5];
             int[] iterationsOfMethods = new int[5];
             double[] timeOfMethods = new double[5];
+            List<double[]> sortedArrays = new List<double[]>();
             double[] array = new double[arrayToSort.Length];
             MakeNewMassive(arrayToSort, array);
             if (isBubbleActive)
@@ -617,6 +618,7 @@ namespace Lab1
                 namesOfMethods[0] = output.Item1;
                 iterationsOfMethods[0] = output.Item2;
                 timeOfMethods[0] = output.Item3;
+                sortedArrays.Add(output.Item4);
             }
             MakeNewMassive(arrayToSort, array);
             if (isInsertsActive)
@@ -625,6 +627,7 @@ namespace Lab1
                 namesOfMethods[1] = output.Item1;
                 iterationsOfMethods[1] = output.Item2;
                 timeOfMethods[1] = output.Item3;
+                sortedArrays.Add(output.Item4);
             }
             MakeNewMassive(arrayToSort, array);
             if (isFastActive)
@@ -633,6 +636,7 @@ namespace Lab1
                 var output = FastSort(array, isIncreasingSort);
                 iterationsOfMethods[2] = output.Item1;
                 timeOfMethods[2] = output.Item2;
+                sortedArrays.Add(output.Item3);
             }
             MakeNewMassive(arrayToSort, array);
             if (isShakeActive)
@@ -641,6 +645,7 @@ namespace Lab1
                 namesOfMethods[3] = output.Item1;
                 iterationsOfMethods[3] = output.Item2;
                 timeOfMethods[3] = output.Item3;
+                sortedArrays.Add(output.Item4);
             }
             MakeNewMassive(arrayToSort, array);
             if (isSwampActive)
@@ -649,11 +654,12 @@ namespace Lab1
                 namesOfMethods[4] = output.Item1;
                 iterationsOfMethods[4] = output.Item2;
                 timeOfMethods[4] = output.Item3;
+                sortedArrays.Add(output.Item4);
             }
-            return (namesOfMethods, iterationsOfMethods, timeOfMethods);
+            return (namesOfMethods, iterationsOfMethods, timeOfMethods, sortedArrays);
         }
 
-        private (string, int, double) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
+        private (string, int, double, double[]) BubbleSort(double[] arrayToSort, bool isIncreasingSort)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -701,10 +707,10 @@ namespace Lab1
 
             timer.Stop();
             timeOfBubble = timer.Elapsed.TotalSeconds;
-            return (namesOfBubble, iterationsOfBubble, timeOfBubble);
+            return (namesOfBubble, iterationsOfBubble, timeOfBubble, arrayToSort);
         }
 
-        private (string, int, double) InsertsSort(double[] arrayToSort, bool isIncreasingSort)
+        private (string, int, double, double[]) InsertsSort(double[] arrayToSort, bool isIncreasingSort)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -747,11 +753,11 @@ namespace Lab1
 
             timer.Stop();
             timeOfInserts = timer.Elapsed.TotalSeconds;
-            return (namesOfInserts, iterationsOfInserts, timeOfInserts);
+            return (namesOfInserts, iterationsOfInserts, timeOfInserts, arrayToSort);
         }
 
         
-        private (int, double) FastSort(double[] arrayToSort, bool isIncreasingSort)
+        private (int, double, double[]) FastSort(double[] arrayToSort, bool isIncreasingSort)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -760,7 +766,7 @@ namespace Lab1
             Sort(arrayToSort, isIncreasingSort, 0, arrayToSort.Length - 1);
             timer.Stop();
             timeOfFast = timer.Elapsed.TotalSeconds;
-            return (fastIterations, timeOfFast);
+            return (fastIterations, timeOfFast, arrayToSort);
         }
          
         private void Sort(double[] array,  bool isIncreasingSort, int lowIndex, int upIndex)
@@ -800,7 +806,7 @@ namespace Lab1
             return index + 1;
         }
 
-        private (string, int, double) ShakeSort(double[] arrayToSort, bool isIncreasingSort)
+        private (string, int, double, double[]) ShakeSort(double[] arrayToSort, bool isIncreasingSort)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -876,10 +882,10 @@ namespace Lab1
 
             timer.Stop();
             timeOfShake = timer.Elapsed.TotalSeconds;
-            return (namesOfShake, iterationsOfShake, timeOfShake);
+            return (namesOfShake, iterationsOfShake, timeOfShake, arrayToSort);
         }
 
-        private (string, int, double) SwampSort(double[] arrayToSort, bool isIncreasingSort, int swampIterations)
+        private (string, int, double, double[]) SwampSort(double[] arrayToSort, bool isIncreasingSort, int swampIterations)
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -905,7 +911,7 @@ namespace Lab1
 
             timer.Stop();
             timeOfSwamp = timer.Elapsed.TotalSeconds;
-            return (namesOfSwamp, iterationsOfSwamp, timeOfSwamp);
+            return (namesOfSwamp, iterationsOfSwamp, timeOfSwamp, arrayToSort);
         }
 
         private bool isSorted(double[] data, bool isIncreasing)
@@ -1002,7 +1008,7 @@ namespace Lab1
         private void Sort(object sender, EventArgs inputEvent)
         {
             var output = model.Sorting(sortView.IsActiveBubble(), sortView.IsActiveInserts(), sortView.IsActiveFast(), sortView.IsActiveShake(), sortView.IsActiveSwamp(), sortView.SwampsIterations(), sortView.NumbersToSort(), sortView.IsIncreasing());
-            sortView.ShowSortResult(output.Item1, output.Item2, output.Item3);
+            sortView.ShowSortResult(output.Item1, output.Item2, output.Item3, output.Item4);
         }
 
         private void Newton(object sender, EventArgs inputEvent)

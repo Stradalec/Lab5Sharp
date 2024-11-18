@@ -266,9 +266,9 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Column1 });
-            dataGridView1.Location = new System.Drawing.Point(12, 240);
+            dataGridView1.Location = new System.Drawing.Point(601, 30);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new System.Drawing.Size(146, 183);
+            dataGridView1.Size = new System.Drawing.Size(146, 195);
             dataGridView1.TabIndex = 8;
             dataGridView1.Visible = false;
             // 
@@ -281,9 +281,9 @@
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Method, Iterations, Time });
-            dataGridView2.Location = new System.Drawing.Point(466, 30);
+            dataGridView2.Location = new System.Drawing.Point(12, 250);
             dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new System.Drawing.Size(325, 150);
+            dataGridView2.Size = new System.Drawing.Size(325, 188);
             dataGridView2.TabIndex = 9;
             // 
             // Method
@@ -341,21 +341,21 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(178, 400);
+            progressBar1.Location = new System.Drawing.Point(445, 178);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(100, 23);
+            progressBar1.Size = new System.Drawing.Size(107, 23);
             progressBar1.TabIndex = 11;
             // 
             // left
             // 
-            left.Location = new System.Drawing.Point(178, 267);
+            left.Location = new System.Drawing.Point(463, 45);
             left.Name = "left";
             left.Size = new System.Drawing.Size(66, 23);
             left.TabIndex = 12;
             // 
             // right
             // 
-            right.Location = new System.Drawing.Point(178, 324);
+            right.Location = new System.Drawing.Point(463, 95);
             right.Name = "right";
             right.Size = new System.Drawing.Size(66, 23);
             right.TabIndex = 13;
@@ -363,7 +363,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(178, 249);
+            label3.Location = new System.Drawing.Point(445, 27);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(107, 15);
             label3.TabIndex = 14;
@@ -372,7 +372,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(178, 299);
+            label4.Location = new System.Drawing.Point(445, 77);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(108, 15);
             label4.TabIndex = 15;

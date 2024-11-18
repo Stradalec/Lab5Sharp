@@ -22,6 +22,7 @@ namespace Lab1
         string path = "temporary";
         private double[] savedArray;
         private bool _isTest = false;
+        private bool _IsFilesExist = false;
         private int _progress = 0;
         private Size formOriginalSize;
         private Rectangle recSortGroup;
@@ -172,7 +173,7 @@ namespace Lab1
 
         }
 
-        void ISortView.ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime)
+        void ISortView.ShowSortResult(string[] methodName, int[] methodIterations, double[] methodTime, List<double[]> sortedArrays)
         {
             dataGridView2.Rows.Clear();
             int rowCount = Math.Max(methodName.Length, Math.Max(methodIterations.Length, methodTime.Length));
@@ -183,6 +184,19 @@ namespace Lab1
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodIterations[index] });
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodTime[index] });
                 dataGridView2.Rows.Add(row);
+                _IsFilesExist = true;
+                if (sortedArrays.Count != 0) 
+                {
+                    string tempFilePath = Path.Combine(Application.StartupPath, methodName[index].ToString());
+                    List<string> strings = new List<string>();
+                    double[] tempArray = sortedArrays[index];
+                    foreach (double number in tempArray)
+                    {
+                        strings.Add(number.ToString());
+                    }
+                    File.WriteAllLines(tempFilePath, strings);
+                }
+                
             }
         }
 
@@ -372,7 +386,7 @@ namespace Lab1
         }
         private bool ValidateText()
         {
-            Regex regex = new Regex(@"^[\d,-]+$");
+            Regex regex = new Regex(@"^[\d]+$");
             bool result = true;
             bool mathces;
             if (string.IsNullOrEmpty(randomArray.Text) || (mathces = regex.IsMatch(randomArray.Text)) == false)
@@ -396,6 +410,19 @@ namespace Lab1
                 MessageBox.Show("Ошибка ввода правого значения интервала", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return result;
+        }
+
+        private void Sorting_FormClosed(object sender, FormClosedEventArgs closeEvent)
+        {
+            if (_IsFilesExist) 
+            {
+                string directoryPath = Application.StartupPath;
+                string[] files = Directory.GetFiles(directoryPath);
+                foreach (string file in files) 
+                {
+                    File.Delete(file);
+                }
+            } 
         }
     }
 
