@@ -583,6 +583,7 @@ namespace Lab1
                         else if (pathToFile.Contains("txt")) 
                         {
                             string[] lines = File.ReadAllLines(pathToFile);
+                            numbers = new double[lines.Length];
                             for (int inputIndex = 0;  inputIndex < lines.Length; ++inputIndex)
                             {
                                 numbers[inputIndex] = Convert.ToDouble(lines[inputIndex]);

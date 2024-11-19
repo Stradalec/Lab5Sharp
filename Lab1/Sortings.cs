@@ -1,4 +1,5 @@
 ﻿using NPOI.SS.Formula.Functions;
+using NPOI.XSSF.Streaming.Values;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -184,7 +185,7 @@ namespace Lab1
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodIterations[index] });
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodTime[index] });
                 _IsFilesExist = true;
-                if (sortedArrays.Count != 0)
+                if (sortedArrays.Count != 0 && savedArray.Length <= index)
                 {
                     string tempFilePath = Path.Combine(Application.StartupPath, methodName[index].ToString());
                     List<string> strings = new List<string>();
@@ -194,7 +195,7 @@ namespace Lab1
                         strings.Add(number.ToString());
                     }
                     File.WriteAllLines(tempFilePath, strings);
-                    row.Cells.Add(new DataGridViewButtonCell { Value = tempFilePath });
+                    row.Cells.Add(new DataGridViewButtonCell { Value = "Открыть файл", Tag = tempFilePath });
                 }
                 dataGridView2.Rows.Add(row);
                 
@@ -237,8 +238,16 @@ namespace Lab1
             double[] numbers = new double[dataGridView1.Rows.Count - 1];
             for (int index = 0; index < dataGridView1.Rows.Count - 1; ++index)
             {
-                double value = Convert.ToDouble(dataGridView1.Rows[index].Cells[0].Value);
-                numbers[index] = value;
+                if(dataGridView1.Rows[index].Cells[0].Value != " ")
+                {
+                    double value = Convert.ToDouble(dataGridView1.Rows[index].Cells[0].Value);
+                    numbers[index] = value;
+                }
+                else
+                {
+                    MessageBox.Show("В массиве для сортировки обнаружена пустота. Включено автозаполнение 0.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    numbers[index] = 0;
+                }
             }
             return numbers;
         }
@@ -339,7 +348,7 @@ namespace Lab1
 
         private void toolStripTextBox2_Click(object sender, EventArgs inputEvent)
         {
-            if (ValidateText())
+            if (ValidateText() && ValidateGrid(dataGridView1))
             {
                 Sort(sender, inputEvent);
             }
@@ -363,7 +372,7 @@ namespace Lab1
 
         private void testingButton_Click(object sender, EventArgs inputEvent)
         {
-            DialogResult result = MessageBox.Show("Вы переходите в тестовый режим. Введение тестового массива и его сортировка займут некоторое время. Вы уверены, что хотите перейти в тестовый режим?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Вы переходите в тестовый режим. Введение тестового массива и его сортировка займут некоторое время (примерно 6 минут 30 секунд). Вы уверены, что хотите перейти в тестовый режим?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 _isTest = true;
@@ -414,24 +423,33 @@ namespace Lab1
             return result;
         }
 
-        private void Sorting_FormClosed(object sender, FormClosedEventArgs closeEvent)
+        private bool ValidateGrid(DataGridView inputGrid)
         {
-            if (_IsFilesExist)
+            bool Isgood = true;
+            bool IsLast = false;
+            foreach (DataGridViewRow row in inputGrid.Rows)
             {
-                string directoryPath = Application.StartupPath;
-                string[] files = Directory.GetFiles(directoryPath);
-                foreach (string file in files)
+                foreach (DataGridViewCell cell in row.Cells) 
                 {
-                    File.Delete(file);
+                    if (cell.Value == null || cell.Value.ToString() == " ")
+                    {                        
+                        if (IsLast) 
+                        {
+                            Isgood = false;
+                            MessageBox.Show("В массиве для сортировки есть пустоты. Отмена операции", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        IsLast = true;
+                    }
                 }
             }
+            return Isgood;
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs inputEvent)
         {
             if (inputEvent.ColumnIndex == 3) 
             {
-                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Value.ToString();
+                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Tag.ToString();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("notepad.exe", path));
             }
         }
