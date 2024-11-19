@@ -185,7 +185,7 @@ namespace Lab1
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodIterations[index] });
                 row.Cells.Add(new DataGridViewTextBoxCell { Value = methodTime[index] });
                 _IsFilesExist = true;
-                if (sortedArrays.Count != 0 && savedArray.Length <= index)
+                if (sortedArrays.Count != 0 && sortedArrays.Count > index)
                 {
                     string tempFilePath = Path.Combine(Application.StartupPath, methodName[index].ToString());
                     List<string> strings = new List<string>();
@@ -194,8 +194,11 @@ namespace Lab1
                     {
                         strings.Add(number.ToString());
                     }
+                    DataGridViewButtonCell buttonCell = new DataGridViewButtonCell();
+                    buttonCell.Value = "открыть файл";
+                    buttonCell.Tag = tempFilePath;
+                    row.Cells.Add(buttonCell);
                     File.WriteAllLines(tempFilePath, strings);
-                    row.Cells.Add(new DataGridViewButtonCell { Value = tempFilePath });
                 }
                 dataGridView2.Rows.Add(row);
                 
@@ -449,7 +452,7 @@ namespace Lab1
         {
             if (inputEvent.ColumnIndex == 3) 
             {
-                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Value.ToString();
+                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Tag.ToString();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("notepad.exe", path));
             }
         }
