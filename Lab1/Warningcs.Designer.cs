@@ -36,6 +36,7 @@
             // 
             richTextBox1.Location = new System.Drawing.Point(13, 13);
             richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
             richTextBox1.Size = new System.Drawing.Size(374, 425);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");

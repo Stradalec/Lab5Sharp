@@ -89,7 +89,7 @@ namespace Lab1
             control.Size = new Size(newWidth, newHeight);
         }
 
-        private void SortingsForm_Resize(object sender, EventArgs e)
+        private void Sortings_Resize(object sender, EventArgs e)
         {
             AutoResize(sortGroup, recSortGroup);
             AutoResize(inputBox, recInputGroup);
@@ -127,7 +127,7 @@ namespace Lab1
 
         int ISortView.ArraySizeToRandom()
         {
-            if (randomArray.Text.Length == 0)
+            if (randomArray.Text.Length == 0 || randomArray.Text == "0")
             {
                 return 10;
             }
@@ -195,7 +195,7 @@ namespace Lab1
                         strings.Add(number.ToString());
                     }
                     File.WriteAllLines(tempFilePath, strings);
-                    row.Cells.Add(new DataGridViewButtonCell { Value = "Открыть файл", Tag = tempFilePath });
+                    row.Cells.Add(new DataGridViewButtonCell { Value = tempFilePath });
                 }
                 dataGridView2.Rows.Add(row);
                 
@@ -449,7 +449,7 @@ namespace Lab1
         {
             if (inputEvent.ColumnIndex == 3) 
             {
-                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Tag.ToString();
+                string path = dataGridView2.Rows[inputEvent.RowIndex].Cells[3].Value.ToString();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("notepad.exe", path));
             }
         }
