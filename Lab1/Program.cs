@@ -60,6 +60,7 @@ namespace Lab1
         int rightInterval();    
         string PathToFile();
 
+        bool IsDouble();
         bool IsActiveBubble();
         bool IsActiveInserts();
         bool IsActiveFast();
@@ -537,7 +538,7 @@ namespace Lab1
         }
 
 
-        public double[] ChooseInput(byte inputChoice, string pathToFile, int leftLimit, int rightLimit, int arraySize = 10)
+        public double[] ChooseInput(byte inputChoice, string pathToFile, int leftLimit, int rightLimit, bool IsNeedToDouble, int arraySize = 10)
         {
             double[] numbers = new double[arraySize];
             switch (inputChoice)
@@ -550,7 +551,15 @@ namespace Lab1
                     Random random = new Random();
                     for (int randomIndex = 0; randomIndex < arraySize; ++randomIndex)
                     {
-                        numbers[randomIndex] = random.Next(-leftLimit, rightLimit) + random.NextDouble();
+                        if (IsNeedToDouble)
+                        {
+                            numbers[randomIndex] = random.Next(-leftLimit, rightLimit) + random.NextDouble();
+                        }
+                        else
+                        {
+                            numbers[randomIndex] = random.Next(-leftLimit, rightLimit);
+                        }
+                        
                     }
                     return numbers;
 
@@ -1007,7 +1016,7 @@ namespace Lab1
 
         private void AddData(object sender, EventArgs inputEvent)
         {
-            var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.leftInterval(), sortView.rightInterval(), sortView.ArraySizeToRandom());
+            var output = model.ChooseInput(sortView.StartInput(), sortView.PathToFile(), sortView.leftInterval(), sortView.rightInterval(), sortView.IsDouble(), sortView.ArraySizeToRandom());
             sortView.ChooseInput(output);
         }
 

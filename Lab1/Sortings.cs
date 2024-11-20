@@ -316,6 +316,17 @@ namespace Lab1
             }
         }
 
+        bool ISortView.IsDouble() 
+        {
+            if (doub.Checked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         double ISortView.SwampsIterations()
         {

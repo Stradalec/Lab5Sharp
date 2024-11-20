@@ -50,6 +50,10 @@
             dataGridView1 = new System.Windows.Forms.DataGridView();
             Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             dataGridView2 = new System.Windows.Forms.DataGridView();
+            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Column4 = new System.Windows.Forms.DataGridViewButtonColumn();
             groupBox1 = new System.Windows.Forms.GroupBox();
             decreasing = new System.Windows.Forms.RadioButton();
             increasing = new System.Windows.Forms.RadioButton();
@@ -59,16 +63,16 @@
             right = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
-            Method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Column4 = new System.Windows.Forms.DataGridViewButtonColumn();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            doub = new System.Windows.Forms.RadioButton();
+            integ = new System.Windows.Forms.RadioButton();
             sortGroup.SuspendLayout();
             inputBox.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // bubble
@@ -288,6 +292,26 @@
             dataGridView2.TabIndex = 9;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
+            // Method
+            // 
+            Method.HeaderText = "Метод";
+            Method.Name = "Method";
+            // 
+            // Iterations
+            // 
+            Iterations.HeaderText = "Итерации";
+            Iterations.Name = "Iterations";
+            // 
+            // Time
+            // 
+            Time.HeaderText = "Время";
+            Time.Name = "Time";
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Открыть файл";
+            Column4.Name = "Column4";
+            // 
             // groupBox1
             // 
             groupBox1.AutoSize = true;
@@ -328,7 +352,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new System.Drawing.Point(445, 178);
+            progressBar1.Location = new System.Drawing.Point(454, 200);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(107, 23);
             progressBar1.TabIndex = 11;
@@ -365,31 +389,45 @@
             label4.TabIndex = 15;
             label4.Text = "Верхний диапазон";
             // 
-            // Method
+            // groupBox2
             // 
-            Method.HeaderText = "Метод";
-            Method.Name = "Method";
+            groupBox2.Controls.Add(doub);
+            groupBox2.Controls.Add(integ);
+            groupBox2.Location = new System.Drawing.Point(454, 125);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(107, 69);
+            groupBox2.TabIndex = 16;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Генерировать:";
             // 
-            // Iterations
+            // doub
             // 
-            Iterations.HeaderText = "Итерации";
-            Iterations.Name = "Iterations";
+            doub.AutoSize = true;
+            doub.Location = new System.Drawing.Point(8, 44);
+            doub.Name = "doub";
+            doub.Size = new System.Drawing.Size(76, 19);
+            doub.TabIndex = 1;
+            doub.TabStop = true;
+            doub.Text = "Дробные";
+            doub.UseVisualStyleBackColor = true;
             // 
-            // Time
+            // integ
             // 
-            Time.HeaderText = "Время";
-            Time.Name = "Time";
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Открыть файл";
-            Column4.Name = "Column4";
+            integ.AutoSize = true;
+            integ.Location = new System.Drawing.Point(8, 22);
+            integ.Name = "integ";
+            integ.Size = new System.Drawing.Size(62, 19);
+            integ.TabIndex = 0;
+            integ.TabStop = true;
+            integ.Text = "Целые";
+            integ.UseVisualStyleBackColor = true;
             // 
             // Sortings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(groupBox2);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(right);
@@ -414,6 +452,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -455,5 +495,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewButtonColumn Column4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton doub;
+        private System.Windows.Forms.RadioButton integ;
     }
 }
