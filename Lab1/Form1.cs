@@ -16,17 +16,26 @@ namespace Lab1
     {
         private Size formOriginalSize;
         private Rectangle recMain;
+        private Rectangle recLabel1;
+        private Rectangle recLabel2;
+        private Rectangle recButton;
         public MainForm()
         {
             InitializeComponent();
             this.Resize += MainForm_Resize;
             formOriginalSize = this.Size;
             recMain = new Rectangle(tableLayoutPanel1.Location, tableLayoutPanel1.Size);
+            recLabel1 = new Rectangle(label1.Location, label1.Size);
+            recLabel2 = new Rectangle(label2.Location, label2.Size);
+            recButton = new Rectangle(button1.Location, button1.Size);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
             AutoResize(tableLayoutPanel1, recMain);
+            AutoResize(label1, recLabel1);
+            AutoResize(label2, recLabel2);
+            AutoResize(button1, recButton);
         }
 
         private void AutoResize(System.Windows.Forms.Control control, Rectangle rectangle)
