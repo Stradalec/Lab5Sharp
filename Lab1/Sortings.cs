@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using NPOI.SS.Formula.Functions;
+﻿using NPOI.SS.Formula.Functions;
 using NPOI.XSSF.Streaming.Values;
 using System;
 using System.Collections.Generic;
@@ -27,23 +26,30 @@ namespace Lab1
         private bool _IsFilesExist = false;
         private int _progress = 0;
         private Size formOriginalSize;
-        private System.Drawing.Rectangle recSortGroup;
-        private System.Drawing.Rectangle recInputGroup;
-        private System.Drawing.Rectangle recIncreaseGroup;
-        private System.Drawing.Rectangle recInputData;
-        private System.Drawing.Rectangle recSortingsResults;
-        private System.Drawing.Rectangle recBubble;
-        private System.Drawing.Rectangle recInserts;
-        private System.Drawing.Rectangle recFast;
-        private System.Drawing.Rectangle recShake;
-        private System.Drawing.Rectangle recSwamp;
-
-
+        private Rectangle recSortGroup;
+        private Rectangle recInputGroup;
+        private Rectangle recIncreaseGroup;
+        private Rectangle recInputData;
+        private Rectangle recSortingsResults;
+        private Rectangle recBubble;
+        private Rectangle recInserts;
+        private Rectangle recFast;
+        private Rectangle recShake;
+        private Rectangle recSwamp;
+        private Rectangle recSwampIterations;
+        private Rectangle recSwampLabel;
+        private Rectangle recLeftLimit;
+        private Rectangle recRightLimit;
+        private Rectangle recLeftLabel;
+        private Rectangle recRightLabel;
+        private Rectangle recInputDoubleGroup;
+        private Rectangle recProgress;
 
         public Sortings()
         {
             InitializeComponent();
             Presenter presenter = new Presenter(this);
+            this.Resize += Sortings_Resize;
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.WorkerSupportsCancellation = true;
             _backgroundWorker.WorkerReportsProgress = true;
@@ -51,43 +57,25 @@ namespace Lab1
             _backgroundWorker.ProgressChanged += _backgroundWorkerProgressChanged;
             _backgroundWorker.RunWorkerCompleted += _backgroundWorkerRunWorkerCompleted;
             formOriginalSize = this.Size;
-            recSortGroup = new System.Drawing.Rectangle(sortGroup.Location, sortGroup.Size);
-            recInputGroup = new System.Drawing.Rectangle(inputBox.Location, inputBox.Size);
-            recSortingsResults = new System.Drawing.Rectangle(dataGridView2.Location, dataGridView2.Size);
-            recIncreaseGroup = new System.Drawing.Rectangle(groupBox1.Location, groupBox1.Size);
-            recInputData = new System.Drawing.Rectangle(dataGridView1.Location, dataGridView1.Size);
-            recBubble = new System.Drawing.Rectangle(bubble.Location, bubble.Size);
-            recInserts = new System.Drawing.Rectangle(inserts.Location, inserts.Size);
-            recFast = new System.Drawing.Rectangle(fast.Location, fast.Size);
-            recShake = new System.Drawing.Rectangle(shake.Location, shake.Size);
-            recSwamp = new System.Drawing.Rectangle(swamp.Location, swamp.Size);
-        }
+            recSortGroup = new Rectangle(sortGroup.Location, sortGroup.Size);
+            recInputGroup = new Rectangle(inputBox.Location, inputBox.Size);
+            recSortingsResults = new Rectangle(dataGridView2.Location, dataGridView2.Size);
+            recIncreaseGroup = new Rectangle(groupBox1.Location, groupBox1.Size);
+            recInputData = new  Rectangle(dataGridView1.Location, dataGridView1.Size);
+            recBubble = new Rectangle(bubble.Location, bubble.Size);
+            recInserts = new Rectangle(inserts.Location, inserts.Size);
+            recFast = new Rectangle(fast.Location, fast.Size);
+            recShake = new Rectangle(shake.Location, shake.Size);
+            recSwamp = new Rectangle(swamp.Location, swamp.Size);
+            recSwampIterations = new Rectangle(iterationsSwamp.Location, iterationsSwamp.Size);
+            recSwampLabel = new Rectangle(label1.Location, label1.Size);
+            recLeftLimit = new Rectangle(left.Location, left.Size);
+            recRightLimit = new Rectangle(right.Location, right.Size);
+            recLeftLabel = new Rectangle(label3.Location, label3.Size);
+            recRightLabel = new Rectangle(label4.Location, label4.Size);
+            recInputDoubleGroup = new Rectangle(groupBox2.Location, groupBox2.Size);
+            recProgress = new Rectangle(progressBar1.Location, progressBar1.Size);
 
-        private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent)
-        {
-            double[] array = (double[])inputEvent.Argument;
-            List<double> list = new List<double>();
-            for (int inputIndex = 0; inputIndex < array.Length; ++inputIndex)
-            {
-                list.Add(array[inputIndex]);
-                int progress = Convert.ToInt32(inputIndex / Convert.ToDouble(array.Length) * 100);
-                _backgroundWorker.ReportProgress(progress);
-            }
-            inputEvent.Result = list;
-        }
-
-        private void AutoResize(Control control, System.Drawing.Rectangle rectangle)
-        {
-            double xRatio = (double)(this.Width) / (double)(formOriginalSize.Width);
-            double yRatio = (double)(this.Height) / (double)(formOriginalSize.Height);
-            int newX = (int)(rectangle.X * xRatio);
-            int newY = (int)(rectangle.Y * yRatio);
-
-            int newWidth = (int)(rectangle.Width * xRatio);
-            int newHeight = (int)(rectangle.Height * yRatio);
-
-            control.Location = new System.Drawing.Point(newX, newY);
-            control.Size = new Size(newWidth, newHeight);
         }
 
         private void Sortings_Resize(object sender, EventArgs e)
@@ -102,7 +90,44 @@ namespace Lab1
             AutoResize(fast, recFast);
             AutoResize(shake, recShake);
             AutoResize(swamp, recSwamp);
+            AutoResize(iterationsSwamp, recSwampIterations);
+            AutoResize(label1, recSwampLabel);
+            AutoResize(left, recLeftLimit);
+            AutoResize(right, recRightLimit);
+            AutoResize(label3, recLeftLabel);
+            AutoResize(label4, recRightLabel);
+            AutoResize(groupBox2, recInputDoubleGroup);
+            AutoResize(progressBar1, recProgress);
         }
+
+
+        private void _backgroundWorkerDoWork(object sender, DoWorkEventArgs inputEvent)
+        {
+            double[] array = (double[])inputEvent.Argument;
+            List<double> list = new List<double>();
+            for (int inputIndex = 0; inputIndex < array.Length; ++inputIndex)
+            {
+                list.Add(array[inputIndex]);
+                int progress = Convert.ToInt32(inputIndex / Convert.ToDouble(array.Length) * 100);
+                _backgroundWorker.ReportProgress(progress);
+            }
+            inputEvent.Result = list;
+        }
+
+        private void AutoResize(Control control,  Rectangle rectangle)
+        {
+            double xRatio = (double)(this.Width) / (double)(formOriginalSize.Width);
+            double yRatio = (double)(this.Height) / (double)(formOriginalSize.Height);
+            int newX = (int)(rectangle.X * xRatio);
+            int newY = (int)(rectangle.Y * yRatio);
+
+            int newWidth = (int)(rectangle.Width * xRatio);
+            int newHeight = (int)(rectangle.Height * yRatio);
+
+            control.Location = new Point(newX, newY);
+            control.Size = new Size(newWidth, newHeight);
+        }
+
 
         private void _backgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs inputEvent)
         {

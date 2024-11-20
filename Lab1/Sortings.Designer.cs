@@ -317,7 +317,7 @@
             groupBox1.AutoSize = true;
             groupBox1.Controls.Add(decreasing);
             groupBox1.Controls.Add(increasing);
-            groupBox1.Location = new System.Drawing.Point(245, 160);
+            groupBox1.Location = new System.Drawing.Point(245, 161);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(194, 63);
             groupBox1.TabIndex = 10;
