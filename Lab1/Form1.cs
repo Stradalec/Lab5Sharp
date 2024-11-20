@@ -14,12 +14,34 @@ namespace Lab1
 {
     public partial class MainForm : Form
     {
+        private Size formOriginalSize;
+        private Rectangle recMain;
         public MainForm()
         {
             InitializeComponent();
-
+            this.Resize += MainForm_Resize;
+            formOriginalSize = this.Size;
+            recMain = new Rectangle(tableLayoutPanel1.Location, tableLayoutPanel1.Size);
         }
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            AutoResize(tableLayoutPanel1, recMain);
+        }
+
+        private void AutoResize(System.Windows.Forms.Control control, Rectangle rectangle)
+        {
+            double xRatio = (double)(this.Width) / (double)(formOriginalSize.Width);
+            double yRatio = (double)(this.Height) / (double)(formOriginalSize.Height);
+            int newX = (int)(rectangle.X * xRatio);
+            int newY = (int)(rectangle.Y * yRatio);
+
+            int newWidth = (int)(rectangle.Width * xRatio);
+            int newHeight = (int)(rectangle.Height * yRatio);
+
+            control.Location = new Point(newX, newY);
+            control.Size = new Size(newWidth, newHeight);
+        }
         private void dichotomyButton_Click(object sender, EventArgs e)
         {
             dichotomyForm dichotomyForm = new dichotomyForm();
